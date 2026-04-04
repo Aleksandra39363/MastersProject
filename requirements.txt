@@ -1,0 +1,21 @@
+# numpy==1.13.3
+# visdom==0.1.4
+# torch==0.4.0
+# Pillow==6.2.0
+# gym==0.9.6
+
+#numpy==1.26.4
+#visdom==0.2.4
+#torch==2.3.0
+#Pillow==10.3.0
+#gymnasium
+#pettingzoo[sisl]>=1.24.0
+
+numpy
+visdom
+torch
+Pillow
+gymnasium
+pettingzoo[sisl]
+matplotlib
+traceback2
