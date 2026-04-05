@@ -11,7 +11,7 @@ warnings.filterwarnings('ignore', category=UserWarning, module='gymnasium')
 import numpy as np
 import torch
 import torch.multiprocessing as _mp
-import visdom
+#import visdom
 import matplotlib
 # Try to use interactive backend with fallback
 #try:
@@ -609,7 +609,8 @@ def main():
     log['eval_steps_taken'] = LogField(list(), False, 'eval_epoch', 'num_episodes')
 
     if args.plot:
-        vis = visdom.Visdom(env=args.plot_env)
+        #vis = visdom.Visdom(env=args.plot_env)
+        args.plot = False
     
     def run(num_epochs):
         print('Starting training now...')

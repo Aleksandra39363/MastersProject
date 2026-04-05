@@ -105,3 +105,10 @@ ENV/
 *.pt
 
 .vscode-server/
+
+
+env/
+envs/
+.conda/
+miniconda3/
+.anaconda/

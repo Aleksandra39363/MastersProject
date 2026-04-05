@@ -10,6 +10,31 @@ except ImportError:
     MultiWalkerDiscretizedWrapper = None
 from pettingzoo_mpe import MPESimpleSpreadWrapper
 
+
+def _ensure_traffic_junction_registered():
+    """Ensure TrafficJunction custom env is registered with Gymnasium."""
+    try:
+        gym.spec('TrafficJunction-v0')
+        return
+    except Exception:
+        pass
+
+    try:
+        import ic3net_envs.ic3net_envs  # noqa: F401
+    except Exception:
+        try:
+            import ic3net_envs  # noqa: F401
+        except Exception:
+            pass
+
+    try:
+        gym.spec('TrafficJunction-v0')
+    except Exception as e:
+        raise RuntimeError(
+            "TrafficJunction-v0 is not registered. Install with `pip install -e ./ic3net_envs` "
+            "in the same Python environment used to run main.py"
+        ) from e
+
 def _unwrap_env(env):
     """Unwrap gymnasium wrappers to access the underlying custom env."""
     while hasattr(env, 'env'):
@@ -18,6 +43,7 @@ def _unwrap_env(env):
 
 def init(env_name, args, final_init=True):
     if env_name == 'traffic_junction':
+        _ensure_traffic_junction_registered()
         env = gym.make('TrafficJunction-v0')
         
         # Remove PassiveEnvChecker wrapper if it exists (custom obs format doesn't match standard)

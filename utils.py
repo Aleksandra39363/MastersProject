@@ -111,6 +111,33 @@ def pca(X, k=2):
     return torch.mm(X,U[:,:k])
 
 
+def _ensure_traffic_junction_registered():
+    """Ensure TrafficJunction custom env is registered with Gymnasium."""
+    try:
+        gym.spec('TrafficJunction-v0')
+        return
+    except Exception:
+        pass
+
+    # Import the module that executes register(...)
+    try:
+        import ic3net_envs.ic3net_envs  # noqa: F401
+    except Exception:
+        try:
+            import ic3net_envs  # noqa: F401
+        except Exception:
+            pass
+
+    # Re-check and fail with actionable error if still missing
+    try:
+        gym.spec('TrafficJunction-v0')
+    except Exception as e:
+        raise RuntimeError(
+            "TrafficJunction-v0 is not registered. Install with `pip install -e ./ic3net_envs` "
+            "in the same Python environment used to run main.py"
+        ) from e
+
+
 def init_args_for_env(parser):
     """Initialize environment-specific arguments for traffic junction"""
     env_dict = {
@@ -128,6 +155,7 @@ def init_args_for_env(parser):
 
    
 
+    _ensure_traffic_junction_registered()
     env = gym.make(env_dict[env_name])
     
     # Unwrap gymnasium wrappers to access custom env's init_args method
