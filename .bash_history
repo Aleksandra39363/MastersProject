@@ -1,103 +1,3 @@
-python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --curr_start 0 --curr_end 400 --nprocesses 1 --num_epochs 1000 --epoch_size 3 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 80 --ic3net --vision 2 --difficulty medium --early_stop --early_stop_threshold 0.95 --early_stop_patience 50 --save model_5agents-es.pt --log_path run_log_5agents-es.pt
-python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --curr_start 0 --curr_end 400 --nprocesses 1 --num_epochs 1000 --epoch_size 3 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 80 --ic3net --vision 2 --difficulty medium --early_stop --early_stop_threshold 0.95 --early_stop_patience 50 --save model_5agents-es.pt --log_path run_log_5agents-es.pt
-python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --curr_start 0 --curr_end 400 --nprocesses 1 --num_epochs 1000 --epoch_size 3 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 80 --ic3net --vision 2 --difficulty medium --early_stop --early_stop_threshold 0.95 --early_stop_patience 50 --save model_5agents-es.pt --log_path run_log_5agents-es.pt
-python visualize_training.py --compare-scaling --log_files run_log_5agents-es.pt run_log_10agents-es.pt run_log_20agents-es.pt --agent_counts 5 10 20
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-es.pt run_log_10agents-es.pt run_log_20agents-es.pt --agent_counts 5 10 20
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-es.pt run_log_10agents-es.pt run_log_20agents-es.pt --agent_counts 5 10 20 --smooth 100
-python3 main.py --env_name traffic_junction --nagents 10 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 2000 --epoch_size 1 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 14 --max_steps 150 --ic3net --vision 2 --difficulty medium --save model_10agents-nones.pt --log_path run_log_10agents-nones.pt
-python3 main.py --env_name traffic_junction --nagents 10 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 2000 --epoch_size 1 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 14 --max_steps 150 --ic3net --vision 2 --difficulty medium --crash_penalty -5 --terminal_reward 10 --save model_10agents-nones.pt --log_path run_log_10agents-nones.pt
-python3 main.py --env_name traffic_junction --nagents 10 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 2000 --epoch_size 1 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 14 --max_steps 150 --ic3net --vision 2 --difficulty medium --crash_penalty -20 --terminal_reward 15 --save model_10agents-nones.pt --log_path run_log_10agents-nones.pt
-python3 visualize_training.py --compare-scaling --log_files run_log_10agents-es.pt --agent_counts 10 --smooth 100
-python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 4000 --epoch_size 1 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 18 --max_steps 250 --ic3net --vision 2 --difficulty hard --save model_20agents-nones.pt --log_path run_log_20agents-nones.pt
-python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 4000 --epoch_size 1 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 18 --max_steps 250 --ic3net --vision 2 --difficulty hard --crash_penalty -5 --terminal_reward 10 --save model_20agents-nones.pt --log_path run_log_20agents-nones.pt
-python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 4000 --epoch_size 1 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 18 --max_steps 250 --ic3net --vision 2 --difficulty hard --crash_penalty -20 --terminal_reward 15 --save model_20agents-nones.pt --log_path run_log_20agents-nones.pt
-git log
-git diff 029e42a69a6dd31e119cad9ec845a8add63a22b8  02dc2f430599387e35e208d1c64f1730481de858
-it branch
-git branch
-git diff
-git status
-git add .
-git log
-git log
-python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 1 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 80 --ic3net --vision 2 --difficulty medium --save model_5agents-nones.pt --log_path run_log_5agents-nones.pt
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-nones.pt --agent_counts 5 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-es.pt run_log_10agents-es.pt run_log_20agents-es.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-nones.pt --agent_counts 5 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-nones.pt --agent_counts 5 
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-es.pt run_log_10agents-es.pt run_log_20agents-es.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-nones.pt --agent_counts 5 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_10agents-nones.pt --agent_counts 10 --smooth 100
-python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 1 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 80 --ic3net --vision 2 --difficulty medium --crash_penalty -5 --terminal_reward 10 --save model_5agents-nones.pt --log_path run_log_5agents-nones.pt
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-nones.pt --agent_counts 5 --smooth 100
-python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 1 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 80 --ic3net --vision 2 --difficulty medium --crash_penalty -5 --terminal_reward 15 --save model_5agents-nones.pt --log_path run_log_5agents-nones.pt
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-nones.pt run_log_10agents-nones.pt run_log_20agents-nones.pt --agent_counts 5 10 20 --smooth 100
-python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 1 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 80 --ic3net --vision 2 --difficulty medium --crash_penalty -20 --terminal_reward 15 --save model_5agents-nones.pt --log_path run_log_5agents-nones.pt
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-nones.pt --agent_counts 5 --smooth 100
-python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 1 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 80 --ic3net --vision 2 --difficulty medium --crash_penalty -20 --terminal_reward 15 --save model_5agents-nones.pt --log_path run_log_5agents-nones.pt
-python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 1 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 80 --ic3net --vision 2 --difficulty medium --crash_penalty -20 --terminal_reward 15 --save model_5agents-nones.pt --log_path run_log_5agents-nones.pt
-python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 1 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 80 --ic3net --vision 2 --difficulty medium --crash_penalty -20 --terminal_reward 15 --save model_5agents-nones.pt --log_path run_log_5agents-nones.pt
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-nones.pt --agent_counts 5 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-es.pt run_log_10agents-es.pt run_log_20agents-es.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-nones.pt --agent_counts 5 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files model_5agents-nones-withoutSuccessRewardBigStepPenalty.pt --agent_counts 5 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-nones.pt --agent_counts 5 --smooth 100
-python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 1 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 80 --ic3net --vision 2 --difficulty medium --crash_penalty -5 --terminal_reward 15 --save model_5agents-nonescollless.pt --log_path run_log_5agents-nonescollless.pt
-python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 1 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 80 --ic3net --vision 2 --difficulty medium --crash_penalty -5 --terminal_reward 15 --save model_5agents-nonescollless.pt --log_path run_log_5agents-nonescollless.pt
-python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 100 --epoch_size 10 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 80 --ic3net --vision 2 --difficulty medium --crash_penalty -5 --terminal_reward 15 --save model_5agents-nonescollless.pt --log_path run_log_5agents-nonescollless.pt
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-es.pt --agent_counts 5 --smooth 100
-python3 main.py --env_name traffic_junction --nagents 2 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 100 --epoch_size 10 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 80 --ic3net --vision 2 --difficulty medium --crash_penalty -5 --terminal_reward 15 --save model_5agents-deletecrashedcars.pt --log_path run_log_5agents-deletecrashedcars.pt
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars.pt --agent_counts 5 --smooth 100
-python3 main.py --env_name traffic_junction --nagents 2 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 100 --epoch_size 10 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 80 --ic3net --vision 2 --difficulty medium --crash_penalty -5 --terminal_reward 15 --save model_5agents-deletecrashedcars.pt --log_path run_log_5agents-deletecrashedcars.pt
-python3 main.py --env_name traffic_junction --nagents 2 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 100 --epoch_size 10 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 80 --ic3net --vision 2 --difficulty medium --crash_penalty -5 --terminal_reward 15 --save model_5agents-deletecrashedcars.pt --log_path run_log_5agents-deletecrashedcars.pt
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars.pt --agent_counts 5 --smooth 100
-python3 main.py --env_name traffic_junction --nagents 2 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 100 --epoch_size 10 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 80 --ic3net --vision 2 --difficulty medium --crash_penalty -20 --terminal_reward 15 --save model_5agents-deletecrashedcars.pt --log_path run_log_5agents-deletecrashedcars.pt
-python3 main.py --env_name traffic_junction --nagents 2 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 100 --epoch_size 10 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 80 --ic3net --vision 2 --difficulty medium --crash_penalty -5 --terminal_reward 20 --save model_5agents-deletecrashedcars.pt --log_path run_log_5agents-deletecrashedcars.pt
-python3 main.py --env_name traffic_junction --nagents 2 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 100 --epoch_size 10 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 80 --ic3net --vision 2 --difficulty medium --crash_penalty -5 --terminal_reward 20 --save model_5agents-deletecrashedcars.pt --log_path run_log_5agents-deletecrashedcars.pt
-python3 main.py --env_name traffic_junction --nagents 2 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 100 --epoch_size 10 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 80 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --save model_5agents-deletecrashedcars.pt --log_path run_log_5agents-deletecrashedcars.pt
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars.pt --agent_counts 5 --smooth 100
-python3 main.py --env_name traffic_junction --nagents 2 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 100 --epoch_size 10 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 80 --ic3net --vision 2 --difficulty medium --crash_penalty -5 --terminal_reward 10 --save model_5agents-deletecrashedcars.pt --log_path run_log_5agents-deletecrashedcars.pt
-python3 main.py --env_name traffic_junction --nagents 2 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 100 --epoch_size 10 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 80 --ic3net --vision 2 --difficulty medium --crash_penalty -20 --terminal_reward 10 --save model_5agents-deletecrashedcars.pt --log_path run_log_5agents-deletecrashedcars.pt
-python3 main.py --env_name traffic_junction --nagents 2 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 100 --epoch_size 10 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 80 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 10 --save model_5agents-deletecrashedcars.pt --log_path run_log_5agents-deletecrashedcars.pt
-python3 main.py --env_name traffic_junction --nagents 2 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 100 --epoch_size 10 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 80 --ic3net --vision 2 --difficulty easy --crash_penalty -15 --terminal_reward 10 --save model_5agents-deletecrashedcars.pt --log_path run_log_5agents-deletecrashedcars.pt
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars.pt --agent_counts 5 --smooth 100
-python3 main.py --env_name traffic_junction --nagents 2 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 100 --epoch_size 10 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 80 --ic3net --vision 2 --difficulty easy --crash_penalty -15 --terminal_reward 10 --save model_5agents-deletecrashedcars2.pt --log_path run_log_5agents-deletecrashedcars2.pt
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars2.pt --agent_counts 5 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars.pt --agent_counts 5 --smooth 100
-python3 main.py --env_name traffic_junction --nagents 2 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 500 --epoch_size 10 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 80 --ic3net --vision 2 --difficulty easy --crash_penalty -5 --terminal_reward 15 --save model_5agents-deletecrashedcars3.pt --log_path run_log_5agents-deletecrashedcars3.pt
-python3 main.py --env_name traffic_junction --nagents 2 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 500 --epoch_size 10 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 120 --ic3net --vision 2 --difficulty easy --crash_penalty -5 --terminal_reward 15 --save model_5agents-deletecrashedcars3.pt --log_path run_log_5agents-deletecrashedcars3.pt
-python3 main.py --env_name traffic_junction --nagents 2 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 500 --epoch_size 10 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 120 --ic3net --vision 2 --difficulty easy --crash_penalty -15 --terminal_reward 15 --save model_5agents-deletecrashedcars3.pt --log_path run_log_5agents-deletecrashedcars3.pt
-python3 main.py --env_name traffic_junction --nagents 2 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 500 --epoch_size 30 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 10 --max_steps 120 --ic3net --vision 2 --difficulty easy --crash_penalty -15 --terminal_reward 15 --save model_5agents-deletecrashedcars3.pt --log_path run_log_5agents-deletecrashedcars3.pt
-python3 main.py --env_name traffic_junction --nagents 2 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 500 --epoch_size 30 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 10 --max_steps 120 --ic3net --vision 2 --difficulty easy --crash_penalty -15 --terminal_reward 15 --save model_5agents-deletecrashedcars3.pt --log_path run_log_5agents-deletecrashedcars3.pt
-python3 main.py --env_name traffic_junction --nagents 2 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 500 --epoch_size 30 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 10 --max_steps 120 --ic3net --vision 2 --difficulty easy --crash_penalty -15 --terminal_reward 15 --save model_5agents-deletecrashedcars3.pt --log_path run_log_5agents-deletecrashedcars3.pt
-python3 main.py --env_name traffic_junction --nagents 2 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 500 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 10 --max_steps 120 --ic3net --vision 2 --difficulty easy --crash_penalty -15 --terminal_reward 15 --save model_5agents-deletecrashedcars3.pt --log_path run_log_5agents-deletecrashedcars3.pt
-python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 5000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 18 --max_steps 1000 --ic3net --vision 2 --difficulty hard --crash_penalty -15 --terminal_reward 15 --save model_20agents-deletecrashedcars3hard.pt --log_path run_log_20agents-deletecrashedcars3hard.pt
-python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 4000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 18 --max_steps 1000 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --save model_20agents-deletecrashedcars3medium.pt --log_path run_log_20agents-deletecrashedcars3medium.pt
-python3 main.py --env_name traffic_junction --nagents 10 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 2000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 12 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --save model_10agents-deletecrashedcars3.pt --log_path run_log_10agents-deletecrashedcars3.pt
-python3 visualize_training.py --compare-scaling --log_files run_log__5agents-deletecrashedcars3easy.pt --agent_counts 5 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3easy.pt --agent_counts 5 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3medium.pt --agent_counts 5 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_10agents-deletecrashedcars3medium.pt --agent_counts 5 --smooth 1
-python3 visualize_training.py --compare-scaling --log_files run_log_10agents-deletecrashedcars3.pt --agent_counts 10 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_10agents-deletecrashedcars3.pt --agent_counts 10 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_20agents-deletecrashedcars3easy.pt --agent_counts 10 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_20agents-deletecrashedcars3medium.pt --agent_counts 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_20agents-deletecrashedcars3hard.pt --agent_counts 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3easy.pt --agent_counts 5 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3medium.pt --agent_counts 5 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_10agents-deletecrashedcars3.pt --agent_counts 10 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_20agents-deletecrashedcars3medium.pt --agent_counts 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_20agents-deletecrashedcars3hard.pt --agent_counts 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3easy.pt --agent_counts 5 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3easy.pt --agent_counts 5 --smooth 10
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3easy.pt --agent_counts 5 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3easy.pt --agent_counts 5 --smooth 100
-python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 10 --max_steps 300 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --save model_5agents-deletecrashedcars3medium.pt --log_path run_log_5agents-deletecrashedcars3medium.pt
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3.pt --agent_counts 5 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3.pt --agent_counts 5 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3.pt --agent_counts 2 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3.pt --agent_counts 2 --smooth 100
-python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 10 --max_steps 300 --ic3net --vision 2 --difficulty easy --crash_penalty -15 --terminal_reward 15 --save model_5agents-deletecrashedcars3easy.pt --log_path run_log_5agents-deletecrashedcars3easy.pt
 python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3easy.pt --agent_counts 5 --smooth 100
 python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3easy.pt run_log_5agents-deletecrashedcars3medium.pt --agent_counts 5 5 --smooth 100
 python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3easy.pt run_log_10agents-deletecrashedcars3.pt run_log_20agents-deletecrashedcars3medium.pt --agent_counts 5 10 20 --smooth 100
@@ -498,3 +398,103 @@ python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagen
 python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1.pt --agent_counts 20
 python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1.pt --agent_counts 20
 python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1.pt --agent_counts 20
+conda activate my_env
+conda activate thesis
+python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1.pt --agent_counts 20
+python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed3.pt --agent_counts 20 
+git add .
+git add .
+git rm -r --cached miniconda3
+git rm -r --cached conda
+git rm -r --cached anaconda
+git add .
+git rm -r --cached anaconda
+git rm -r --cached .anaconda
+git rm -r --cached .conda
+git status
+git add .
+git commit -m "added files when attention is used"
+git add
+git push
+git rm --cached Miniconda3-latest-Linux-x86_64.sh
+git commit --amend --no-edit
+git push origin master --force
+python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed3.pt --agent_counts 20 
+python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed3.pt --agent_counts 20 --smooth 100
+python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1'sporo.pt --agent_counts 20
+q
+python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1-sporo.pt --agent_counts 20
+q
+python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed3.pt --agent_counts 20 --smooth 100
+python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1-sporo.pt --agent_counts 20
+python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1-sporo.pt --agent_counts 20 --smooth 100
+python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed3.pt --agent_counts 20 --smooth 100
+tmux
+tmux list-panes -a
+tmux ls
+tmux attach -t 3
+tmux attach -t 4
+tmux attach -t 5
+tmux attach -t 5
+tmux attach -t 0
+tmux attach -t 1
+tmux ls
+tmux
+tmux attach -t 2
+for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 8 --num_epochs 2000 --epoch_size 10 --batch_size 500 --hid_size 256 --comm_passes 3 --entr 0.001 --detach_gap 10 --lrate 0.0005 --dim 20 --max_steps 1000 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_20mediumagents_seed${s}.pt --log_path run_log_20mediumagents_seed${s}.pt; done
+for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 8 --num_epochs 2000 --epoch_size 10 --batch_size 500 --hid_size 256 --comm_passes 3 --entr 0.001 --detach_gap 10 --lrate 0.0005 --dim 20 --max_steps 1000 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_20mediumagents_seed${s}.pt --log_path run_log_20mediumagents_seed${s}.pt; done
+for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 8 --num_epochs 2000 --epoch_size 10 --batch_size 500 --hid_size 256 --comm_passes 3 --entr 0.001 --detach_gap 10 --lrate 0.0005 --dim 20 --max_steps 1000 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_20mediumagents_seed${s}.pt --log_path run_log_20mediumagents_seed${s}.pt; done
+conda activate thesis
+for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 8 --num_epochs 2000 --epoch_size 10 --batch_size 500 --hid_size 256 --comm_passes 3 --entr 0.001 --detach_gap 10 --lrate 0.0005 --dim 20 --max_steps 1000 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_20mediumagents_seed${s}.pt --log_path run_log_20mediumagents_seed${s}.pt; done
+for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 3000 --epoch_size 20 --batch_size 150 --hid_size 128 --comm_passes 2 --entr 0.0005 --detach_gap 10 --lrate 0.00005 --dim 20 --max_steps 1000 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_20mediumagents_seed${s}.pt --log_path run_log_20mediumagents_seed${s}.pt; done
+for s in 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 10 --max_steps 300 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --use_agent_attn --attn_heads 4 --save model_5mediumagents_Atnseed${s}.pt --log_path run_log_5mediumagents_Atnseed${s}.pt; done
+q
+tmux attach -t 1
+tmux kill-session -t 1
+tmux kill-session -t 0
+tmux ls
+tmux attach -t 2
+tmux list-panes -a
+tmux attach -t 5
+tmux
+tmux kill-session -t 5
+tmux attach -t 0
+tmux attach -t 1
+tmux attach -t 5
+tmux attach -t 1
+tmux ls
+tmux
+python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1.pt --agent_counts 20 --smooth 100
+conda activate thesis
+python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1.pt --agent_counts 20 --smooth 100
+python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1-sporo.pt --agent_counts 20 --smooth 100
+python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1.pt --agent_counts 20 --smooth 100
+python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1.pt --agent_counts 20
+python3 visualize_training.py --compare-scaling --log_files run_log_10agents_seed4.pt --agent_counts 10
+python3 visualize_training.py --compare-scaling --log_files run_log_10agents_seed3.pt --agent_counts 10
+python3 visualize_training.py --compare-scaling --log_files run_log_10agents_seed2.pt --agent_counts 10
+python3 visualize_training.py --compare-scaling --log_files run_log_10agents_seed1.pt --agent_counts 10
+python3 visualize_training.py --compare-scaling --log_files run_log_10agents_seed3.pt --agent_counts 10
+python3 visualize_training.py --compare-scaling --log_files run_log_10agents_seed4.pt --agent_counts 10
+python3 visualize_training.py --compare-scaling --log_files run_log_10agents_Atnseed2.pt --agent_counts 10
+python3 visualize_training.py --compare-scaling --log_files run_log_10agents_Atnseed1.pt --agent_counts 10
+python3 visualize_training.py --compare-scaling --log_files run_log_5mediumagents_Atnseed1.pt --agent_counts 5
+python3 visualize_training.py --compare-scaling --log_files run_log_5mediumagents_Atnseed2.pt --agent_counts 5
+python3 visualize_training.py --compare-scaling --log_files run_log_5mediumagents_Atnseed3.pt --agent_counts 5
+python3 visualize_training.py --compare-scaling --log_files run_log_5mediumagents_Atnseed4.pt --agent_counts 5
+python3 visualize_training.py --compare-scaling --log_files run_log_5mediumagents_Atnseed4.pt --agent_counts 5 --smooth 100
+tmux ls
+for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 3000 --epoch_size 20 --batch_size 500 --hid_size 128 --detach_gap 10 --lrate 0.0005 --dim 20 --max_steps 1000 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --use_agent_attn --attn_heads 4 --save model_20mediumagents_Atnseed${s}.pt --log_path run_log_20mediumagents_Atnseed${s}.pt; done
+conda activate thesis
+tmux
+tmux ls
+conda activate thesis
+tmux
+conda activate thesis
+python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1.pt --agent_counts 20 --smooth 100
+python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_Atnseed1.pt --agent_counts 20 --smooth 100
+python3 visualize_training.py --compare-scaling --log_files run_log_5mediumagents_Atnseed1.pt --agent_counts 20 --smooth 100
+python3 visualize_training.py --compare-scaling --log_files run_log_5mediumagents_Atnseed2.pt --agent_counts 5 --smooth 100
+python3 visualize_training.py --compare-scaling --log_files run_log_5mediumagents_Atnseed1.pt run_log_5mediumagents_Atnseed2.pt run_log_5mediumagents_Atnseed3.pt run_log_5mediumagents_Atnseed4.pt run_log_5mediumagents_Atnseed5.pt --agent_counts 5 --smooth 100
+python3 visualize_training.py --compare-scaling --log_files run_log_5mediumagents_Atnseed1.pt run_log_5mediumagents_Atnseed2.pt run_log_5mediumagents_Atnseed3.pt run_log_5mediumagents_Atnseed4.pt run_log_5mediumagents_Atnseed5.pt --agent_counts 5 5 5 5 5 --smooth 100
+python3 visualize_training.py --compare-scaling --log_files run_log_10agents_Atnseed1.pt run_log_10agents_Atnseed2.pt run_log_10agents_Atnseed3.pt run_log_10agents_Atnseed4.pt run_log_10agents_Atnseed5.pt --agent_counts 10 10 10 10 10 --smooth 100

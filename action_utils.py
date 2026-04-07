@@ -2,6 +2,33 @@ import numpy as np
 import torch
 from torch.autograd import Variable
 
+
+def _safe_multinomial_sample(probs):
+    """Sample from probs safely by removing invalid values and normalizing rows."""
+    probs = torch.nan_to_num(probs, nan=0.0, posinf=0.0, neginf=0.0)
+    probs = torch.clamp(probs, min=0.0)
+
+    if probs.dim() == 1:
+        probs = probs.unsqueeze(0)
+        squeeze_back = True
+    else:
+        squeeze_back = False
+
+    row_sums = probs.sum(dim=-1, keepdim=True)
+    valid_rows = row_sums.squeeze(-1) > 0
+    if not torch.all(valid_rows):
+        # If a row collapsed to all zeros, sample uniformly for that row.
+        probs = probs.clone()
+        probs[~valid_rows] = 1.0
+        row_sums = probs.sum(dim=-1, keepdim=True)
+
+    probs = probs / row_sums
+    sample = torch.multinomial(probs, 1).detach()
+
+    if squeeze_back:
+        sample = sample.squeeze(0)
+    return sample
+
 def parse_action_args(args):
     if args.num_actions[0] > 0:
         # environment takes discrete action
@@ -35,7 +62,7 @@ def select_action(args, action_out, eval_mode=False):
     else:
         log_p_a = action_out
         p_a = [[z.exp() for z in x] for x in log_p_a]
-        ret = torch.stack([torch.stack([torch.multinomial(x, 1).detach() for x in p]) for p in p_a])
+        ret = torch.stack([torch.stack([_safe_multinomial_sample(x) for x in p]) for p in p_a])
         return ret
 
 def translate_action(args, env, action):

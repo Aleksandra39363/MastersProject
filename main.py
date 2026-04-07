@@ -169,6 +169,10 @@ def main():
                         help='Apply multi-head self-attention over agent hidden states')
     parser.add_argument('--attn_heads', type=int, default=4,
                         help='Number of heads for agent self-attention')
+    parser.add_argument('--flash', default=False, action='store_true',
+                        help='Use FlashAttention-style agent attention over hidden states')
+    parser.add_argument('--mamba', default=False, action='store_true',
+                        help='Use a Mamba-style recurrent block for temporal memory')
 
     init_args_for_env(parser)
     args = parser.parse_args()
@@ -178,6 +182,18 @@ def main():
         args.hard_attn = 1 # Agent can choose to communicate or not [move_action, comm_action]
         args.mean_ratio = 1 # fully cooperative
         args.comm_action_one = False # not always communicate
+
+    if args.flash and args.mamba:
+        raise ValueError('Choose only one of --flash or --mamba')
+
+    if args.flash:
+        args.commnet = 1
+        args.use_agent_attn = False
+
+    if args.mamba:
+        args.commnet = 1
+        args.recurrent = True
+        args.rnn_type = 'MAMBA'
 
     # Set friendly agents count (traffic junction only has friendly cars)
     args.nfriendly = args.nagents
@@ -200,9 +216,10 @@ def main():
         args.dim_actions = env.dim_actions + 1
 
     # Recurrence
-    if args.commnet and (args.recurrent or args.rnn_type == 'LSTM'):
+    if args.commnet and (args.recurrent or args.rnn_type in ['LSTM', 'MAMBA']):
         args.recurrent = True
-        args.rnn_type = 'LSTM'
+        if args.rnn_type not in ['LSTM', 'MAMBA']:
+            args.rnn_type = 'LSTM'
 
 
     parse_action_args(args)

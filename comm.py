@@ -5,6 +5,30 @@ from torch import nn
 from models import MLP
 from action_utils import select_action, translate_action
 
+
+class MambaLiteBlock(nn.Module):
+    """Lightweight Mamba-style selective state update used as a local fallback."""
+
+    def __init__(self, hid_size):
+        super().__init__()
+        self.in_proj = nn.Linear(hid_size, hid_size * 2)
+        self.state_proj = nn.Linear(hid_size, hid_size)
+        self.gate_proj = nn.Linear(hid_size, hid_size)
+        self.out_proj = nn.Linear(hid_size, hid_size)
+        self.norm = nn.LayerNorm(hid_size)
+        self.act = nn.SiLU()
+
+    def forward(self, x, prev_state):
+        if prev_state.dim() == 3:
+            prev_state = prev_state.view(-1, prev_state.size(-1))
+
+        gate_in, value_in = self.in_proj(x).chunk(2, dim=-1)
+        state_term = self.state_proj(prev_state)
+        gate = torch.sigmoid(gate_in + self.gate_proj(prev_state))
+        candidate = self.out_proj(self.act(value_in + state_term))
+        next_state = self.norm(prev_state + gate * candidate)
+        return next_state
+
 class CommNetMLP(nn.Module):
     """
     MLP based CommNet. Uses communication vector to communicate info
@@ -27,6 +51,9 @@ class CommNetMLP(nn.Module):
         self.hid_size = args.hid_size
         self.comm_passes = args.comm_passes
         self.recurrent = args.recurrent
+        self.use_agent_attn = getattr(args, 'use_agent_attn', False)
+        self.use_flash_attn = getattr(args, 'flash', False)
+        self.use_mamba = getattr(args, 'mamba', False)
 
         self.continuous = args.continuous
         if self.continuous:
@@ -96,12 +123,61 @@ class CommNetMLP(nn.Module):
 
         self.value_head = nn.Linear(self.hid_size, 1)
 
-        self.use_agent_attn = getattr(args, 'use_agent_attn', False)
+        if self.use_flash_attn and self.use_agent_attn:
+            raise ValueError('Choose either --flash or --use_agent_attn, not both')
+
+        if self.use_flash_attn:
+            attn_heads = max(1, int(getattr(args, 'attn_heads', 1)))
+            if self.hid_size % attn_heads != 0:
+                attn_heads = 1
+            self.flash_heads = attn_heads
+            self.flash_head_dim = self.hid_size // attn_heads
+            self.flash_q_proj = nn.Linear(self.hid_size, self.hid_size)
+            self.flash_k_proj = nn.Linear(self.hid_size, self.hid_size)
+            self.flash_v_proj = nn.Linear(self.hid_size, self.hid_size)
+            self.flash_out_proj = nn.Linear(self.hid_size, self.hid_size)
+            self.flash_norm = nn.LayerNorm(self.hid_size)
+
+        if self.use_mamba:
+            self.mamba_block = MambaLiteBlock(self.hid_size)
         if self.use_agent_attn:
             attn_heads = max(1, int(getattr(args, 'attn_heads', 1)))
             if self.hid_size % attn_heads != 0:
                 attn_heads = 1
             self.agent_attn = nn.MultiheadAttention(self.hid_size, attn_heads, batch_first=True)
+
+
+    def _apply_flash_attention(self, h, info, agent_mask, agent_mask_transpose):
+        batch_size, n, hid_size = h.shape
+        q = self.flash_q_proj(h)
+        k = self.flash_k_proj(h)
+        v = self.flash_v_proj(h)
+
+        q = q.view(batch_size, n, self.flash_heads, self.flash_head_dim).transpose(1, 2)
+        k = k.view(batch_size, n, self.flash_heads, self.flash_head_dim).transpose(1, 2)
+        v = v.view(batch_size, n, self.flash_heads, self.flash_head_dim).transpose(1, 2)
+
+        attn_mask = None
+        if 'alive_mask' in info or self.args.hard_attn:
+            key_mask = agent_mask[:, 0, :, 0].to(dtype=torch.bool)
+            attn_mask = torch.zeros(batch_size, 1, 1, n, device=h.device, dtype=h.dtype)
+            attn_mask = attn_mask.masked_fill(~key_mask.unsqueeze(1).unsqueeze(2), float('-inf'))
+
+        attn_out = F.scaled_dot_product_attention(
+            q, k, v,
+            attn_mask=attn_mask,
+            dropout_p=0.0,
+            is_causal=False
+        )
+        attn_out = attn_out.transpose(1, 2).contiguous().view(batch_size, n, hid_size)
+        attn_out = self.flash_out_proj(attn_out)
+        h = self.flash_norm(h + attn_out)
+
+        if 'alive_mask' in info or self.args.hard_attn:
+            query_mask = agent_mask_transpose[:, :, 0, 0].to(dtype=h.dtype).unsqueeze(-1)
+            h = h * query_mask
+
+        return h
 
 
     def get_agent_mask(self, batch_size, info):
@@ -219,12 +295,16 @@ class CommNetMLP(nn.Module):
                 # skip connection - combine comm. matrix and encoded input for all agents
                 inp = x + c
 
-                inp = inp.view(batch_size * n, self.hid_size)
+                if self.use_mamba:
+                    inp = inp.view(batch_size * n, self.hid_size)
+                    hidden_state = self.mamba_block(inp, hidden_state)
+                else:
+                    inp = inp.view(batch_size * n, self.hid_size)
 
-                output = self.f_module(inp, (hidden_state, cell_state))
+                    output = self.f_module(inp, (hidden_state, cell_state))
 
-                hidden_state = output[0]
-                cell_state = output[1]
+                    hidden_state = output[0]
+                    cell_state = output[1]
 
             else: # MLP|RNN
                 # Get next hidden state from f node
@@ -233,7 +313,13 @@ class CommNetMLP(nn.Module):
                 hidden_state = self.tanh(hidden_state)
 
         h = hidden_state.view(batch_size, n, self.hid_size)
-        if self.use_agent_attn:
+        if self.use_flash_attn:
+            h = self._apply_flash_attention(h, info, agent_mask, agent_mask_transpose)
+            if self.args.recurrent:
+                hidden_state = h.contiguous().view(batch_size * n, self.hid_size)
+            else:
+                hidden_state = h
+        elif self.use_agent_attn:
             attn_out, _ = self.agent_attn(h, h, h, need_weights=False)
             h = h + attn_out
             if self.args.recurrent:
@@ -254,9 +340,10 @@ class CommNetMLP(nn.Module):
             action = [F.log_softmax(head(h), dim=-1) for head in self.heads]
 
         if self.args.recurrent:
-            return action, value_head, (hidden_state.clone(), cell_state.clone())
-        else:
-            return action, value_head
+            if self.args.rnn_type == 'LSTM':
+                return action, value_head, (hidden_state.clone(), cell_state.clone())
+            return action, value_head, hidden_state.clone()
+        return action, value_head
 
     def init_weights(self, m):
         if type(m) == nn.Linear:
@@ -264,6 +351,8 @@ class CommNetMLP(nn.Module):
 
     def init_hidden(self, batch_size):
         # dim 0 = num of layers * num of direction
+        if self.use_mamba or getattr(self.args, 'rnn_type', 'MLP') != 'LSTM':
+            return torch.zeros(batch_size * self.nagents, self.hid_size, requires_grad=True, device=self.device)
         return tuple(( torch.zeros(batch_size * self.nagents, self.hid_size, requires_grad=True, device=self.device),
                        torch.zeros(batch_size * self.nagents, self.hid_size, requires_grad=True, device=self.device)))
 
