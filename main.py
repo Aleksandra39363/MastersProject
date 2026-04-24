@@ -173,6 +173,10 @@ def main():
                         help='Use FlashAttention-style agent attention over hidden states')
     parser.add_argument('--mamba', default=False, action='store_true',
                         help='Use a Mamba-style recurrent block for temporal memory')
+    parser.add_argument('--mamba_dropout', type=float, default=0.1,
+                        help='Dropout rate for Mamba block')
+    parser.add_argument('--max_grad_norm', type=float, default=1.0,
+                        help='Maximum gradient norm for clipping (0 to disable)', required=False)
 
     init_args_for_env(parser)
     args = parser.parse_args()

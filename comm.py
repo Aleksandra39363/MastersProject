@@ -6,27 +6,91 @@ from models import MLP
 from action_utils import select_action, translate_action
 
 
-class MambaLiteBlock(nn.Module):
-    """Lightweight Mamba-style selective state update used as a local fallback."""
+class MambaBlock(nn.Module):
+    """Real Mamba-style selective state-space model based on the Mamba paper.
+    
+    Uses a learnable state transition matrix with selective input/output gates.
+    Implements the core SSM idea: state update is gated by input importance.
+    """
 
-    def __init__(self, hid_size):
+    def __init__(self, hid_size, dropout=0.1):
         super().__init__()
-        self.in_proj = nn.Linear(hid_size, hid_size * 2)
-        self.state_proj = nn.Linear(hid_size, hid_size)
-        self.gate_proj = nn.Linear(hid_size, hid_size)
+        self.hid_size = hid_size
+        
+        # Input projection: expand to allow separate input/forget/output gates
+        self.in_proj = nn.Linear(hid_size, hid_size * 3)  # input, forget, output
+        
+        # State-space model components
+        # A is the state transition matrix (learnable)
+        self.A = nn.Parameter(torch.randn(hid_size) * 0.1)
+        # B is input-to-state (learnable)
+        self.B_proj = nn.Linear(hid_size, hid_size)
+        # C is state-to-output (learnable)
+        self.C_proj = nn.Linear(hid_size, hid_size)
+        
+        # Selective gates: learn what to update/output based on input
+        self.forget_gate = nn.Sequential(
+            nn.Linear(hid_size, hid_size // 2),
+            nn.GELU(),
+            nn.Linear(hid_size // 2, hid_size),
+            nn.Sigmoid()
+        )
+        self.output_gate = nn.Sequential(
+            nn.Linear(hid_size, hid_size // 2),
+            nn.GELU(),
+            nn.Linear(hid_size // 2, hid_size),
+            nn.Sigmoid()
+        )
+        
+        # Output projection and LN
         self.out_proj = nn.Linear(hid_size, hid_size)
         self.norm = nn.LayerNorm(hid_size)
+        self.dropout = nn.Dropout(dropout)
         self.act = nn.SiLU()
 
     def forward(self, x, prev_state):
+        """Perform one step of Mamba SSM.
+        
+        Args:
+            x: (batch_size, hid_size) input
+            prev_state: (batch_size, hid_size) previous state
+            
+        Returns:
+            next_state: (batch_size, hid_size) next state
+        """
         if prev_state.dim() == 3:
             prev_state = prev_state.view(-1, prev_state.size(-1))
-
-        gate_in, value_in = self.in_proj(x).chunk(2, dim=-1)
-        state_term = self.state_proj(prev_state)
-        gate = torch.sigmoid(gate_in + self.gate_proj(prev_state))
-        candidate = self.out_proj(self.act(value_in + state_term))
-        next_state = self.norm(prev_state + gate * candidate)
+        
+        batch_size = x.size(0)
+        
+        # Project input to get candidate input and gates
+        proj = self.in_proj(x)  # (batch_size, hid_size*3)
+        x_input, x_forget, x_output = proj.chunk(3, dim=-1)
+        
+        # Selective forget and output gates based on input
+        forget = self.forget_gate(x_forget)
+        output_gate = self.output_gate(x_output)
+        
+        # State-space update: new_state = forget * old_state + (1 - forget) * input_contribution
+        # This is the core SSM: selective state update
+        B = torch.tanh(self.B_proj(x_input))  # (batch_size, hid_size)
+        
+        # State transition with learnable A (decay factor)
+        A = torch.clamp(self.A, -1.0, 0.0)  # Keep stable
+        decay = torch.exp(A).unsqueeze(0)  # (1, hid_size)
+        
+        # Selective update: forget old state, integrate new input
+        next_state = forget * decay * prev_state + (1 - forget) * B
+        
+        # Output projection with selective gating
+        C = self.C_proj(next_state)
+        y = output_gate * self.act(C)
+        
+        # Residual and layer norm for stability
+        out = self.out_proj(y)
+        out = self.dropout(out)
+        next_state = self.norm(next_state + out)
+        
         return next_state
 
 class CommNetMLP(nn.Module):
@@ -139,7 +203,8 @@ class CommNetMLP(nn.Module):
             self.flash_norm = nn.LayerNorm(self.hid_size)
 
         if self.use_mamba:
-            self.mamba_block = MambaLiteBlock(self.hid_size)
+            mamba_dropout = getattr(args, 'mamba_dropout', 0.1)
+            self.mamba_block = MambaBlock(self.hid_size, dropout=mamba_dropout)
         if self.use_agent_attn:
             attn_heads = max(1, int(getattr(args, 'attn_heads', 1)))
             if self.hid_size % attn_heads != 0:
@@ -157,10 +222,13 @@ class CommNetMLP(nn.Module):
         k = k.view(batch_size, n, self.flash_heads, self.flash_head_dim).transpose(1, 2)
         v = v.view(batch_size, n, self.flash_heads, self.flash_head_dim).transpose(1, 2)
 
-        attn_mask = None
+        # Match baseline CommNet behavior by disallowing self-communication.
+        attn_mask = torch.zeros(batch_size, 1, n, n, device=h.device, dtype=h.dtype)
+        diag = torch.eye(n, device=h.device, dtype=torch.bool).view(1, 1, n, n)
+        attn_mask = attn_mask.masked_fill(diag, float('-inf'))
+
         if 'alive_mask' in info or self.args.hard_attn:
             key_mask = agent_mask[:, 0, :, 0].to(dtype=torch.bool)
-            attn_mask = torch.zeros(batch_size, 1, 1, n, device=h.device, dtype=h.dtype)
             attn_mask = attn_mask.masked_fill(~key_mask.unsqueeze(1).unsqueeze(2), float('-inf'))
 
         attn_out = F.scaled_dot_product_attention(
@@ -317,6 +385,11 @@ class CommNetMLP(nn.Module):
             h = self._apply_flash_attention(h, info, agent_mask, agent_mask_transpose)
             if self.args.recurrent:
                 hidden_state = h.contiguous().view(batch_size * n, self.hid_size)
+                if self.args.rnn_type == 'LSTM':
+                    # Keep LSTM hidden/cell states aligned after flash update.
+                    c = cell_state.view(batch_size, n, self.hid_size)
+                    c = self._apply_flash_attention(c, info, agent_mask, agent_mask_transpose)
+                    cell_state = c.contiguous().view(batch_size * n, self.hid_size)
             else:
                 hidden_state = h
         elif self.use_agent_attn:
@@ -352,7 +425,7 @@ class CommNetMLP(nn.Module):
     def init_hidden(self, batch_size):
         # dim 0 = num of layers * num of direction
         if self.use_mamba or getattr(self.args, 'rnn_type', 'MLP') != 'LSTM':
-            return torch.zeros(batch_size * self.nagents, self.hid_size, requires_grad=True, device=self.device)
-        return tuple(( torch.zeros(batch_size * self.nagents, self.hid_size, requires_grad=True, device=self.device),
-                       torch.zeros(batch_size * self.nagents, self.hid_size, requires_grad=True, device=self.device)))
+            return torch.zeros(batch_size * self.nagents, self.hid_size, device=self.device)
+        return tuple(( torch.zeros(batch_size * self.nagents, self.hid_size, device=self.device),
+                       torch.zeros(batch_size * self.nagents, self.hid_size, device=self.device)))
 

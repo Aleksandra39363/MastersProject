@@ -1,57 +1,3 @@
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3easy2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3medium.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3medium2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3medium.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3medium2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3medium.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3medium2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3medium.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3easy2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3medium.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3easy2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3medium.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3easy2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3medium.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3medium2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3medium.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3medium2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3medium.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3medium2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3medium.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3medium2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3medium.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3medium2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3medium.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3easy2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3medium.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3easy2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3medium.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3easy2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3medium.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3easy2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3medium.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3easy2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3medium.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3easy2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3medium.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3medium2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3medium.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3medium2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3medium.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3easy2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3medium.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3medium2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3medium.pt --agent_counts 5 10 20 --smooth 100
-git add .
-git commit -m "working without attention"
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3medium2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3medium.pt --agent_counts 5 10 20 --smooth 100
-python3 main.py --env_name traffic_junction --nagents 10 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 500 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 12 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --use_agent_attn --attn_heads 4  --save model_10agents-WithAtn3-2.pt --log_path run_log_10agents-WithAtn3-2.pt
-python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 500 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 10 --max_steps 300 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --save model_5agents-deletecrashedcars3medium2.pt --log_path run_log_5agents-deletecrashedcars3medium2.pt
-python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 4 --num_epochs 500 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 18 --max_steps 1000 --ic3net --vision 2 --difficulty hard --crash_penalty -15 --terminal_reward 15 --save model_20agents-deletecrashedcars3hard2.pt --log_path run_log_20agents-deletecrashedcars3hard2.pt
-python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 500 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 10 --max_steps 300 --ic3net --vision 2 --difficulty easy --crash_penalty -15 --terminal_reward 15 --save model_5agents-deletecrashedcars3easy2.pt --log_path run_log_5agents-deletecrashedcars3easy2.pt
-python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 500 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 10 --max_steps 300 --ic3net --vision 2 --difficulty easy --crash_penalty -15 --terminal_reward 15 use_agent_attn --attn_heads 4  --save model_5agents-deletecrashedcars3easy2.pt --log_path run_log_5agents-deletecrashedcars3easy2.pt
-python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 500 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 10 --max_steps 300 --ic3net --vision 2 --difficulty easy --crash_penalty -15 --terminal_reward 15 --use_agent_attn --attn_heads 4  --save model_5agents-deletecrashedcars3easy2.pt --log_path run_log_5agents-deletecrashedcars3easy2.pt
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3easy.pt run_log_10agents-deletecrashedcars3.pt run_log_20agents-deletecrashedcars3hard.pt --agent_counts 5 10 20 --smooth 100
-git log --oneline
-git reset --hard a48b7b9
-python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 500 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 10 --max_steps 300 --ic3net --vision 2 --difficulty easy --crash_penalty -15 --terminal_reward 15 --use_agent_attn --attn_heads 4  --save model_5agents-WithAtn3easy2.pt --log_path run_log_5agents-WithAtn3easy2.pt
-git log --oneline
-git reset --hard a48b7b9
-git reset --hard a48b7b9
-git reset --hard a48b7b9
-git checkout HEAD
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-pasthope3easy.pt run_log_10agents-deletecrashedcars3.pt run_log_20agents-deletecrashedcars3hard.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-pasthope3easy2.pt run_log_10agents-deletecrashedcars3.pt run_log_20agents-deletecrashedcars3hard.pt --agent_counts 5 10 20 --smooth 100
-git reset --hard a48b7b9
-python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 500 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 10 --max_steps 300 --ic3net --vision 2 --difficulty easy --crash_penalty -15 --terminal_reward 15 --use_agent_attn --attn_heads 4  --save model_5agents-WithAtn3easy2.pt --log_path run_log_5agents-WithAtn3easy2.pt
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3easy.pt run_log_10agents-deletecrashedcars3.pt run_log_20agents-deletecrashedcars3hard.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3easy.pt run_log_10agents-deletecrashedcars3.pt --agent_counts 5 10 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt --agent_counts 2 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt --agent_counts 2 
-python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt --agent_counts 2 --smooth 20
-python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt --agent_counts 2 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3easy.pt --agent_counts 5 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt --agent_counts 2 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt --agent_counts 2 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt --agent_counts 2 --smooth 100
 python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt --agent_counts 2 --smooth 100
 python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt --agent_counts 2 
 python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt --agent_counts 2 --smooth 100
@@ -497,4 +443,58 @@ tmux kill-session -t 11
 tmux ls
 tmux attach -t 7
 tmux attach -t 8
+tmux
+git add ,
+git add .
+git commit -m "trying enthopy"
+git push
+tmux ls
+tmux attach -t 9
+tmux kill-session -t 9
+tmux kill-session -t 7
+conda activate thesis
+python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1.pt --agent_counts 20 --smooth 100
+tmux
+tmux
+chmod +x /tmp/train_20agents_comparison.sh
+cat /tmp/train_20agents_comparison.sh
+chmod +x /tmp/train_20agents_two_stage.sh
+conda activate thesis
+python3 visualize_training.py --compare-scaling --log_files run_log_5mediumagents_seed1.pt  run_log_5mediumagents_seed2.pt run_log_5mediumagents_seed3.pt run_log_5mediumagents_seed4.pt run_log_5mediumagents_seed5.pt --agent_counts 5 5 5 5 5 --smooth 100
+python3 visualize_training.py --compare-scaling --log_files run_log_5mediumagents_Atnseed1.pt  run_log_5mediumagents_Atnseed2.pt run_log_5mediumagents_Atnseed3.pt run_log_5mediumagents_Atnseed4.pt run_log_5mediumagents_Atnseed5.pt --agent_counts 5 5 5 5 5 --smooth 100
+python3 visualize_training.py --compare-scaling --log_files run_log_10agents_Atnseed1.pt  run_log_10agents_Atnseed2.pt run_log_10agents_Atnseed3.pt run_log_10agents_Atnseed4.pt  --agent_counts 10 10 10 10 --smooth 100
+python3 visualize_training.py --compare-scaling --log_files run_log_10agents_seed1.pt  run_log_10agents_seed2.pt run_log_10agents_seed3.pt run_log_10agents_seed4.pt run_log_10agents_seed5.pt --agent_counts 10 10 10 10 10 --smooth 100
+python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1.pt --agent_counts 20 --smooth 100
+python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1-sporo.pt run_log_20mediumagents_seed2-sporo.pt --agent_counts 20 20 --smooth 100
+python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1-sporo.pt run_log_20agents_Base_s1_stage1.pt run_log_20agents_Base_s1_stage2.pt --agent_counts 20 20 --smooth 100
+python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Base_s1_stage1.pt run_log_20agents_Base_s1_stage2.pt --agent_counts 20 20 --smooth 100
+python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Base_s1_stage1.pt --agent_counts 20 --smooth 100
+python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Base_s1_stage2.pt --agent_counts 20 --smooth 100
+python3 visualize_training.py --compare-scaling --log_files run_log_10agents_Atnseed1.pt  run_log_10agents_Atnseed2.pt run_log_10agents_Atnseed3.pt run_log_10agents_Atnseed4.pt  --agent_counts 10 10 10 10 --smooth 100
+python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Base_s1_stage2.pt --agent_counts 20 --smooth 100
+python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Base_s1_stage1.pt --agent_counts 20 --smooth 100
+python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1.pt --agent_counts 20 --smooth 100
+conda activate thesis
+tmux
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Base_s1_stage1.pt run_log_20agents_Base_s2_stage1.pt run_log_20agents_Base_s3_stage1.pt -agent_counts 20 20 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Base_s1_stage1.pt run_log_20agents_Base_s2_stage1.pt run_log_20agents_Base_s3_stage1.pt --agent_counts 20 20 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Base_s1_stage2.pt run_log_20agents_Base_s2_stage2.pt run_log_20agents_Base_s3_stage2.pt --agent_counts 20 20 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Flash_s1_stage1.pt run_log_20agents_Flash_s2_stage1.pt run_log_20agents_Flash_s3_stage1.pt --agent_counts 20 20 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Flash_s1_stage2.pt run_log_20agents_Flash_s2_stage2.pt run_log_20agents_Flash_s3_stage2.pt --agent_counts 20 20 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Mamba_s1_stage1.pt run_log_20agents_Mamba_s2_stage1.pt run_log_20agents_Mamba_s3_stage1.pt --agent_counts 20 20 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Mamba_s1_stage2.pt run_log_20agents_Mamba_s2_stage2.pt run_log_20agents_Mamba_s3_stage2.pt --agent_counts 20 20 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Mamba_s1_stage1.pt run_log_20agents_Mamba_s2_stage1.pt run_log_20agents_Mamba_s3_stage1.pt --agent_counts 20 20 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Mamba_s1_stage2.pt run_log_20agents_Mamba_s2_stage2.pt run_log_20agents_Mamba_s3_stage2.pt --agent_counts 20 20 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Mamba_s1_stage1.pt run_log_20agents_Mamba_s2_stage1.pt run_log_20agents_Mamba_s3_stage1.pt --agent_counts 20 20 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Mamba_s1_stage2.pt run_log_20agents_Mamba_s2_stage2.pt run_log_20agents_Mamba_s3_stage2.pt --agent_counts 20 20 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1.pt run_log_20mediumagents_seed2.pt run_log_20mediumagents_seed3.pt run_log_20mediumagents_seed4.pt run_log_20mediumagents_seed5.pt --agent_counts 20 20 20 20 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Base_s1_stage1.pt run_log_20agents_Base_s2_stage1.pt run_log_20agents_Base_s3_stage1.pt --agent_counts 20 20 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1.pt run_log_20mediumagents_seed2.pt run_log_20mediumagents_seed3.pt run_log_20mediumagents_seed4.pt run_log_20mediumagents_seed5.pt --agent_counts 20 20 20 20 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Base_s1_stage1.pt run_log_20agents_Base_s2_stage1.pt run_log_20agents_Base_s3_stage1.pt --agent_counts 20 20 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Base_s1_stage2.pt run_log_20agents_Base_s2_stage2.pt run_log_20agents_Base_s3_stage2.pt --agent_counts 20 20 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Base_s1_stage1.pt run_log_20agents_Base_s2_stage1.pt run_log_20agents_Base_s3_stage1.pt --agent_counts 20 20 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1.pt run_log_20mediumagents_seed2.pt run_log_20mediumagents_seed3.pt run_log_20mediumagents_seed4.pt run_log_20mediumagents_seed5.pt --agent_counts 20 20 20 20 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Base_s1_stage1.pt run_log_20agents_Base_s2_stage1.pt run_log_20agents_Base_s3_stage1.pt --agent_counts 20 20 20 --smooth 100
+conda activate thesis 
+pip install mamba-ssm -q
 tmux

@@ -277,6 +277,11 @@ class Trainer(object):
 
         s = self.compute_grad(batch)
         merge_stat(s, stat)
+        
+        # Gradient clipping for recurrent stability
+        if self.args.max_grad_norm > 0:
+            torch.nn.utils.clip_grad_norm_(self.params, self.args.max_grad_norm)
+        
         for p in self.params:
             if p._grad is not None:
                 p._grad.data /= stat['num_steps']
