@@ -736,7 +736,7 @@ class TrafficJunctionEnv(gym.Env):
         return out
 
     def _all_idx(self, idx, axis):
-        grid = np.ogrid[tuple(map(slice, idx.shape))]
+        grid = list(np.ogrid[tuple(map(slice, idx.shape))])
         grid.insert(axis, idx)
         return tuple(grid)
 

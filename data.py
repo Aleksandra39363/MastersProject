@@ -5,10 +5,9 @@ from gymnasium.wrappers import PassiveEnvChecker
 import ic3net_envs
 from env_wrappers import *
 try:
-    from pettingzoo_multiwalker import MultiWalkerDiscretizedWrapper
+    from pettingzoo_mpe import MPESimpleSpreadWrapper
 except ImportError:
-    MultiWalkerDiscretizedWrapper = None
-from pettingzoo_mpe import MPESimpleSpreadWrapper
+    MPESimpleSpreadWrapper = None
 
 
 def _ensure_traffic_junction_registered():
@@ -95,6 +94,9 @@ def init(env_name, args, final_init=True):
         # PettingZoo MPE Simple Spread: Cooperative landmark coverage
         # N agents must spread to cover N landmarks, avoiding collisions
         # Great for testing communication effectiveness!
+        if MPESimpleSpreadWrapper is None:
+            raise RuntimeError("MPE Simple Spread requires pettingzoo.mpe (install with: pip install pettingzoo[mpe]). Use 'traffic_junction' instead.")
+        
         agent_count = getattr(args, 'nfriendly', None) or getattr(args, 'nagents', 3)
         max_steps = getattr(args, 'max_steps', 25)
         device = getattr(args, 'device', torch.device('cpu'))

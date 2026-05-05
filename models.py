@@ -5,6 +5,52 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
+class MambaCell(nn.Module):
+    """
+    Simplified Mamba Cell implementation - state-space model with gating
+    Based on the core idea of Mamba: efficient selective state spaces
+    """
+    def __init__(self, d_model, d_state=64, dropout=0.0):
+        super().__init__()
+        self.d_model = d_model
+        self.d_state = d_state
+
+        # Input projection with gating (like Mamba's z)
+        self.in_proj = nn.Linear(d_model, d_state * 2)
+        self.out_proj = nn.Linear(d_state, d_model)
+        self.dropout = nn.Dropout(dropout) if dropout > 0 else None
+
+        # SSM parameters
+        self.A = nn.Parameter(torch.randn(d_state))
+        self.B_proj = nn.Linear(d_model, d_state)
+        self.C_proj = nn.Linear(d_model, d_state)
+
+    def forward(self, x, state):
+        # x: (batch, d_model)
+        # state: (batch, d_state)
+
+        # Project input
+        proj = self.in_proj(x)  # (batch, d_state * 2)
+        b, z = proj.chunk(2, dim=-1)  # b: (batch, d_state), z: (batch, d_state)
+
+        # SSM update
+        b = self.B_proj(x)  # (batch, d_state)
+        c = self.C_proj(x)  # (batch, d_state)
+
+        # State update: h' = A * h + B * x
+        state = torch.exp(self.A).unsqueeze(0) * state + b
+
+        # Output: y = C * h * silu(z)
+        y = c * state * F.silu(z)
+
+        y = self.out_proj(y)  # (batch, d_model)
+
+        if self.dropout is not None:
+            y = self.dropout(y)
+
+        return y, state
+
+
 class MLP(nn.Module):
     def __init__(self, args, num_inputs):
         super(MLP, self).__init__()
@@ -66,6 +112,11 @@ class RNN(MLP):
         if self.args.rnn_type == 'LSTM':
             del self.affine2
             self.lstm_unit = nn.LSTMCell(self.hid_size, self.hid_size)
+        elif self.args.rnn_type == 'MAMBA':
+            del self.affine2
+            self.d_state = 64
+            self.mamba_unit = MambaCell(self.hid_size, d_state=self.d_state, 
+                                       dropout=getattr(args, 'mamba_dropout', 0.0))
 
     def forward(self, x, info={}):
         x, prev_hid = x
@@ -78,6 +129,13 @@ class RNN(MLP):
             next_hid = output[0]
             cell_state = output[1]
             ret = (next_hid.clone(), cell_state.clone())
+            next_hid = next_hid.view(batch_size, self.nagents, self.hid_size)
+        elif self.args.rnn_type == 'MAMBA':
+            batch_size = encoded_x.size(0)
+            encoded_x = encoded_x.view(batch_size * self.nagents, self.hid_size)
+            output, state = self.mamba_unit(encoded_x, prev_hid)
+            next_hid = output
+            ret = state
             next_hid = next_hid.view(batch_size, self.nagents, self.hid_size)
         else:
             next_hid = F.tanh(self.affine2(prev_hid) + encoded_x)
@@ -94,6 +152,11 @@ class RNN(MLP):
 
     def init_hidden(self, batch_size):
         # dim 0 = num of layers * num of direction
-        return tuple(( torch.zeros(batch_size * self.nagents, self.hid_size, requires_grad=True, device=self.device),
-                       torch.zeros(batch_size * self.nagents, self.hid_size, requires_grad=True, device=self.device)))
+        if self.args.rnn_type == 'LSTM':
+            return tuple(( torch.zeros(batch_size * self.nagents, self.hid_size, requires_grad=True, device=self.device),
+                           torch.zeros(batch_size * self.nagents, self.hid_size, requires_grad=True, device=self.device)))
+        elif self.args.rnn_type == 'MAMBA':
+            return torch.zeros(batch_size * self.nagents, self.d_state, requires_grad=True, device=self.device)
+        else:
+            return torch.zeros(batch_size, self.nagents, self.hid_size, requires_grad=True, device=self.device)
 

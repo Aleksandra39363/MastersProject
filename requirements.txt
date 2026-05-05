@@ -19,3 +19,4 @@ pettingzoo[sisl]>=1.24.0
 #pettingzoo[sisl]
 matplotlib
 traceback2
+optuna>=3.6.0

@@ -1,0 +1,478 @@
+\section{Methods}
+\label{sec:methods}
+
+\subsection{Baseline: IC3Net with CommNet}
+\label{subsec:baseline}
+
+The baseline model follows the IC3Net architecture (Jiang et al.~\cite{ic3net}), combining multi-agent coordination with learned hard communication gates. The baseline consists of:
+
+\begin{enumerate}
+    \item \textbf{Observation Encoder:} A linear projection $\mathbf{e}_i^t = W_e \mathbf{o}_i^t$ maps each agent $i$'s observation to a hidden representation $\mathbf{e}_i^t \in \mathbb{R}^{d_h}$.
+    
+    \item \textbf{Communication Averaging:} Messages are aggregated via simple mean pooling over agents that choose to communicate:
+    \[
+    \mathbf{m}^t_i = \frac{1}{|\mathcal{N}_i|} \sum_{j \in \mathcal{N}_i} \mathbf{e}_j^t \cdot \mathbb{1}[\text{comm}_j^t = 1]
+    \]
+    where $\mathbb{1}[\cdot]$ is the communication binary gate and $\mathcal{N}_i$ is the neighbor set.
+    
+    \item \textbf{Hard Communication Gate:} A discrete action $\text{comm}_i^t \in \{0, 1\}$ learned via policy, enabling selective silence. Agents choose between moving and communicating.
+    
+    \item \textbf{Recurrent Update (Optional):} If using LSTM, the hidden state is updated:
+    \[
+    \mathbf{h}_i^{t+1} = \text{LSTM}([\mathbf{e}_i^t; \mathbf{m}^t_i], \mathbf{h}_i^t)
+    \]
+    Otherwise, direct concatenation $[\mathbf{e}_i^t; \mathbf{m}^t_i]$ is used.
+    
+    \item \textbf{Action Heads:} Separate linear layers produce logits for movement and communication actions:
+    \[
+    \pi_i^{\text{move}}(t) = \text{softmax}(W_a \mathbf{h}_i^{t+1})
+    \]
+    \[
+    \pi_i^{\text{comm}}(t) = \text{sigmoid}(W_c \mathbf{h}_i^{t+1})
+    \]
+\end{enumerate}
+
+\textbf{Key limitation:} This averaging scheme provides only coarse, all-or-nothing communication. Agents cannot express \emph{selective attention} to specific neighbors; all silent agents are equally ignored.
+
+
+\subsection{Method 1: Multi-Head Self-Attention}
+\label{subsec:attention}
+
+We replace the averaging communication with learned multi-head self-attention over the agent hidden states. The core innovation is applying $\text{nn.MultiheadAttention}$ to shape the agent representations.
+
+\subsubsection{Architecture}
+
+Given encoded states $\mathbf{E}^t = [\mathbf{e}_1^t, \ldots, \mathbf{e}_N^t]^T \in \mathbb{R}^{N \times d_h}$ for $N$ agents:
+
+\begin{equation}
+\text{Attn}(\mathbf{E}^t) = \text{MultiheadAttention}(\mathbf{Q}, \mathbf{K}, \mathbf{V})
+\end{equation}
+
+where $\mathbf{Q} = \mathbf{E}^t W^Q$, $\mathbf{K} = \mathbf{E}^t W^K$, $\mathbf{V} = \mathbf{E}^t W^V$ (learned projection matrices).
+
+For $H$ attention heads, each head computes:
+\begin{equation}
+\text{head}_h = \text{softmax}\left(\frac{\mathbf{Q}_h \mathbf{K}_h^T}{\sqrt{d_k}}\right) \mathbf{V}_h
+\end{equation}
+
+where $d_k = d_h / H$ (dimension per head).
+
+\textbf{Multi-pass communication:} To allow information propagation across multiple hops, we apply attention $C$ times (--comm\_passes):
+\begin{equation}
+\mathbf{E}^{(c+1)} = \text{Attn}(\mathbf{E}^{(c)}) \quad \text{for} \quad c = 0, \ldots, C-1
+\end{equation}
+
+\textbf{Residual and gating:} We apply a soft gate $\boldsymbol{\alpha}^t \in [0,1]^{N}$ and residual connection:
+\begin{equation}
+\mathbf{h}_i^{t+1} = \mathbf{e}_i^t + \alpha_i^t \cdot (\text{Attn}_i(\mathbf{E}^t) - \mathbf{e}_i^t)
+\end{equation}
+
+The gate is learned via $\boldsymbol{\alpha}^t = \sigma(W_g \mathbf{e}^t)$ where $\sigma$ is sigmoid. This allows the model to \emph{skip} communication when unnecessary.
+
+\subsubsection{Complexity Analysis}
+
+Self-attention has \textbf{quadratic complexity in $N$}: $O(N^2 \cdot d_h)$ per forward pass. For $N=25$ agents with $d_h=128$:
+\begin{align*}
+\text{FLOPs per pass} &\approx 2 \times 25^2 \times 128 = 160\text{K} \\
+\text{Going to } N=30: &\approx 2 \times 30^2 \times 128 = 230\text{K} \quad (+44\%)
+\end{align*}
+
+This quadratic growth is a key scalability bottleneck beyond $N \approx 30$ agents.
+
+\subsubsection{Code Implementation Snippet}
+
+From [comm\_attention.py](comm_attention.py#L47-L120):
+
+\begin{lstlisting}[language=Python, basicstyle=\small]
+class AttentionCommNetMLP(nn.Module):
+    def __init__(self, args, num_inputs):
+        super().__init__()
+        self.encoder = nn.Linear(num_inputs, args.hid_size)
+        self.attention = nn.MultiheadAttention(
+            embed_dim=args.hid_size,
+            num_heads=args.attn_heads,  # e.g., 4 or 8
+            batch_first=True,
+            dropout=0.1
+        )
+        self.comm_gate = nn.Sequential(
+            nn.Linear(args.hid_size, args.hid_size // 2),
+            nn.ReLU(),
+            nn.Linear(args.hid_size // 2, 1),
+            nn.Sigmoid()
+        )
+        self.norm1 = nn.LayerNorm(args.hid_size)
+    
+    def forward(self, x):
+        # Reshape for attention: (batch, nagents, hid_size)
+        encoded = self.encoder(x)  # (B*N, hid_size)
+        h = encoded.view(batch_size, nagents, hid_size)
+        
+        # Multi-pass attention
+        for _ in range(self.comm_passes):
+            comm_out, attn_weights = self.attention(h, h, h)
+            gate = self.comm_gate(h)  # (B, N, 1)
+            h = self.norm1(h + gate * (comm_out - h))  # Residual
+        
+        return h.view(batch_size * nagents, hid_size)
+\end{lstlisting}
+
+\textbf{Why attention helps:}
+\begin{itemize}
+    \item \textbf{Selective mixing:} Attention weights $\alpha_{ij}$ are learned per pair; high-priority neighbors receive more signal.
+    \item \textbf{Dense gradients:} Unlike binary gates, continuous attention weights provide nonzero gradients everywhere, improving optimization.
+    \item \textbf{Multiple pathways:} $H$ heads can specialize (e.g., one head attends to potential blockers, another to downstream agents).
+\end{itemize}
+
+\textbf{Limitations:}
+\begin{itemize}
+    \item Scales poorly beyond $N \approx 30$.
+    \item Requires careful tuning of learning rate, entropy, and hidden size.
+    \item May overfit with small datasets or few seeds.
+\end{itemize}
+
+
+\subsection{Method 2: Flash Attention Variant}
+\label{subsec:flash}
+
+Flash Attention (Dao et al.~\cite{flash-attn}) is a memory-efficient implementation of standard attention with the same $O(N^2)$ complexity but reduced memory bandwidth. Our variant integrates Flash attention semantics (optimized attention computation) as a drop-in replacement.
+
+\subsubsection{Motivation}
+
+Standard attention computes the full $N \times N$ attention matrix in memory. Flash Attention reduces this by computing attention in smaller blocks with kernel fusion, trading memory for computation. This is beneficial for:
+\begin{itemize}
+    \item \textbf{GPU memory efficiency:} More room for larger batch sizes or hidden dimensions.
+    \item \textbf{Training speed:} Better cache locality and reduced memory transfers.
+    \item \textbf{Slightly higher stability:} Numerically stable backward pass.
+\end{itemize}
+
+\subsubsection{Implementation in IC3Net Context}
+
+In practice, we use `torch.nn.MultiheadAttention` with tuned parameters and explicit dropout control. The integration is at [main.py](main.py#L172-L199):
+
+\begin{lstlisting}[language=Python, basicstyle=\small]
+if args.flash:
+    args.commnet = 1
+    args.use_agent_attn = False
+    model = AttentionCommNetMLP(args, num_inputs)
+    # Flash-like benefits via:
+    # - Optimized CUDA kernels (torch 2.0+ with compile)
+    # - Reduced precision if fp16 is used
+    # - Memory-efficient attention patterns
+\end{lstlisting}
+
+\textbf{Key hyperparameters for Flash:}
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|l|}
+\hline
+\textbf{Parameter} & \textbf{Default} & \textbf{Role} \\
+\hline
+\texttt{hid\_size} & 128 & Embedding dimension (shared across heads) \\
+\texttt{attn\_heads} & 4 & Number of attention heads; set $d_k = d_h / \text{heads}$ \\
+\texttt{flash\_attn\_dropout} & 0.0 & Dropout inside attention (0.0 for inference) \\
+\texttt{comm\_passes} & 1 & Number of attention rounds \\
+\texttt{lrate} & $1 \times 10^{-4}$ & Learning rate (reduce to $5 \times 10^{-5}$ for $N > 20$) \\
+\texttt{entr} & $5 \times 10^{-5}$ & Entropy bonus (stage 1 only) \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Known Issues and Instability}
+
+Flash Attention in this context suffers from:
+\begin{enumerate}
+    \item \textbf{Optimization fragility:} Identical $O(N^2)$ complexity to standard attention; benefits are mainly memory/speed. Without careful hyperparameter tuning, performance degrades.
+    \item \textbf{Gradient saturation:} Attention weights can collapse to uniform or near-zero, especially with poor initialization or high entropy.
+    \item \textbf{Scaling beyond $N=25$:} Even with memory efficiency, optimization becomes unstable at $N > 25$ agents.
+\end{enumerate}
+
+\textbf{Why Flash alone does not solve the problem:} Flash is a computational optimization, not an algorithmic one. It does not reduce the $O(N^2)$ pairwise interactions or improve credit assignment; it only makes those interactions faster. For true scaling, \emph{architectural changes} (hierarchical, sparse, or local attention) are needed.
+
+
+\subsection{Method 3: Mamba-Style Recurrent SSM}
+\label{subsec:mamba}
+
+Mamba (Gu \& Dao~\cite{mamba}) is a recent state-space model (SSM) that aims to combine recurrent and attention-like properties with linear or near-linear complexity. We integrate a simplified Mamba-inspired block into IC3Net.
+
+\subsubsection{Motivation}
+
+SSMs offer:
+\begin{itemize}
+    \item \textbf{Linear or near-linear complexity:} $O(N)$ instead of $O(N^2)$.
+    \item \textbf{Temporal memory:} Can capture long-range dependencies through hidden state evolution.
+    \item \textbf{Efficient inference:} RNN-like scan operations avoid storing the full attention matrix.
+\end{itemize}
+
+For multi-agent coordination, an SSM per agent + shared hidden state could potentially allow efficient information diffusion.
+
+\subsubsection{Simplified Mamba Block Design}
+
+Our implementation uses a simplified recurrent SSM-inspired block with per-agent hidden states:
+
+\begin{equation}
+\mathbf{h}_i^{t+1} = \text{SSM}_i(\mathbf{h}_i^t, [\mathbf{e}_i^t; \text{broadcast}(\mathbf{h}^t)])
+\end{equation}
+
+where $\text{broadcast}(\mathbf{h}^t)$ aggregates information from other agents (e.g., mean, attention-weighted sum, or learned gating).
+
+\textbf{Concrete form:}
+\begin{align}
+\mathbf{z}_i^t &= \text{MLP}([\mathbf{e}_i^t; \mathbf{h}_i^t; \mathbf{m}_i^t]) \quad \text{(input projection)} \\
+\mathbf{h}_i^{t+1} &= \tanh(\mathbf{z}_i^t) \quad \text{(state update)}
+\end{align}
+
+where $\mathbf{m}_i^t$ is the aggregated communication signal.
+
+\subsubsection{Implementation Challenges}
+
+From [models.py](models.py#L60-L80) and main.py integration (--mamba flag):
+
+\begin{lstlisting}[language=Python, basicstyle=\small]
+if args.mamba:
+    args.commnet = 1
+    args.recurrent = True
+    args.rnn_type = 'MAMBA'
+    # Mamba block wraps the LSTM or custom SSM cell
+
+class MambaBlock(nn.Module):
+    """Simplified Mamba-inspired recurrent block for agents."""
+    def __init__(self, hid_size, comm_dim):
+        super().__init__()
+        self.hid_size = hid_size
+        # Input projection (encoder + communication)
+        self.input_proj = nn.Linear(hid_size + comm_dim, hid_size)
+        # State transition (SSM-like)
+        self.state_update = nn.GRUCell(hid_size, hid_size)
+        # Output gating (prevents saturation)
+        self.gate = nn.Sequential(
+            nn.Linear(hid_size, hid_size),
+            nn.Sigmoid()
+        )
+    
+    def forward(self, x, h_prev):
+        z = torch.tanh(self.input_proj(x))
+        h_new = self.state_update(z, h_prev)
+        return h_new * self.gate(h_new)
+\end{lstlisting}
+
+\textbf{Key hyperparameters for Mamba:}
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|l|}
+\hline
+\textbf{Parameter} & \textbf{Default} & \textbf{Role} \\
+\hline
+\texttt{hid\_size} & 128 & SSM hidden state dimension \\
+\texttt{mamba\_dropout} & 0.1 & Dropout in SSM gates \\
+\texttt{recurrent} & True & Enable stateful RNN \\
+\texttt{rnn\_type} & MAMBA & Use Mamba block instead of LSTM \\
+\texttt{lrate} & $1 \times 10^{-4}$ & Learning rate \\
+\texttt{entr} & $5 \times 10^{-5}$ (stage 1) & Entropy for exploration \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Known Issues and Limitations}
+
+\begin{enumerate}
+    \item \textbf{Vanishing/exploding gradients:} RNN-based approaches suffer from gradient flow issues over long sequences. Careful weight initialization and gradient clipping are essential.
+    \item \textbf{Lack of global context:} Unlike attention, RNNs process sequentially and may miss simultaneous agent interactions.
+    \item \textbf{Communication coupling:} The hidden state can become a bottleneck if all agents rely on a global broadcast; partial observability makes per-agent SSM challenging.
+    \item \textbf{Training instability:} Our simplified Mamba showed poor convergence on 20+ agents. Root cause: unclear communication mixing + RNN state explosion with stochastic gradients.
+\end{enumerate}
+
+\textbf{Why Mamba is underperforming:}
+\begin{itemize}
+    \item SSMs assume sequential time steps, but coordination is \emph{parallel} and highly interactive.
+    \item Without explicit interaction modeling (like attention), RNNs cannot represent fine-grained pairwise dependencies.
+    \item State dimensionality and initialization are critical; current implementation may not scale hidden state properly for 20+ agents.
+\end{itemize}
+
+
+\subsection{Hyperparameter Tuning Strategy: Why Flash \& Mamba Underperform}
+\label{subsec:hyperparam}
+
+You ask: \textit{``Could the underperformance be due to hyperparameters rather than the methods themselves?''}
+
+\textbf{Answer: Partially yes, but the core issue is architectural.}
+
+\subsubsection{Hyperparameter Search Approaches}
+
+For a systematic investigation, consider:
+
+\begin{enumerate}
+    \item \textbf{Grid/Random Search:} Define ranges for key hyperparameters, sample uniformly or on a grid, train to convergence, and rank by final success rate.
+    
+    \textbf{Recommended ranges:}
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{|l|c|c|}
+    \hline
+    \textbf{Parameter} & \textbf{Range} & \textbf{Notes} \\
+    \hline
+    \texttt{lrate} & $[1e-5, 1e-3]$ & Log scale; start conservative ($5e-5$ for $N \geq 20$) \\
+    \texttt{hid\_size} & $[64, 256]$ & Larger for attention; return diminishing for Mamba \\
+    \texttt{entr} & $[1e-6, 1e-3]$ & Stage 1 only; stage 2 should be 0.0 \\
+    \texttt{batch\_size} & $[32, 256]$ & Larger = less variance but longer episodes \\
+    \texttt{attn\_heads} (Flash/Attn) & $[2, 8]$ & $d_k = d_h / \text{heads}$; 4-6 often optimal \\
+    \texttt{comm\_passes} (Attn) & $[1, 3]$ & Diminishing returns; 2+ rarely helps much \\
+    \texttt{mamba\_dropout} (Mamba) & $[0.0, 0.3]$ & High dropout stabilizes but reduces capacity \\
+    \texttt{grad\_clip} & $[0.5, 2.0]$ & Critical for RNNs; use $\sim 1.0$ \\
+    \hline
+    \end{tabular}
+    \end{table}
+    
+    \item \textbf{Optuna (Bayesian Optimization):} More efficient than grid search; Optuna samples from a prior based on past trials.
+    
+    \begin{lstlisting}[language=Python, basicstyle=\small]
+# Example: Optuna integration
+import optuna
+from optuna.samplers import TPESampler
+
+def objective(trial):
+    hid_size = trial.suggest_int('hid_size', 64, 256)
+    lrate = trial.suggest_float('lrate', 1e-5, 1e-3, log=True)
+    entr = trial.suggest_float('entr', 1e-6, 1e-3, log=True)
+    
+    # Train model with these hyperparameters
+    success_rate = train_and_eval(
+        hid_size=hid_size,
+        lrate=lrate,
+        entr=entr,
+        nagents=20,
+        num_epochs=800
+    )
+    return success_rate
+
+sampler = TPESampler(seed=42)
+study = optuna.create_study(sampler=sampler, direction='maximize')
+study.optimize(objective, n_trials=50)  # 50 random seeds
+    \end{lstlisting}
+    
+    \item \textbf{Population-Based Training (PBT):} Continuously adapt hyperparameters during training based on performance metrics.
+    
+    \item \textbf{Multi-seed ensemble:} Run each configuration 3--5 times with different seeds; report mean ± std.
+\end{enumerate}
+
+\subsubsection{Why Search Often Does Not Fully Fix Underperformance}
+
+Even with extensive hyperparameter search, Flash and Mamba are likely to underperform standard attention because:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Method} & \textbf{Complexity} & \textbf{Architectural Fit for Coordination} \\
+\hline
+Multi-head Attention & $O(N^2)$ & \checkmark Good: explicit pairwise interactions \\
+Flash Attention & $O(N^2)$ & \checkmark Same as standard attention (memory optimization only) \\
+Mamba SSM & $O(N)$ / $O(N \log N)$ & \ding{55} Poor: sequential, not parallel; hard to model simultaneous interactions \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{Key insight:} Mamba's linear complexity is achieved by sacrificing the ability to model arbitrary pairwise interactions in a single step. Multi-agent coordination requires dense, parallel communication---exactly what attention does well and RNNs struggle with.
+
+\subsubsection{Recommended Validation Protocol}
+
+\begin{enumerate}
+    \item \textbf{Baseline tuning:} First, optimize the baseline CommNetMLP (hard gates only) using the same search space. If baseline remains poor, the problem is not the fancy architecture but the reward or environment.
+    \item \textbf{Fair comparison:} Tune each method independently; do not assume hyperparameters transfer.
+    \item \textbf{Ablation:} For each method, isolate the contribution of key components (e.g., hidden size, dropout, comm passes).
+    \item \textbf{Scaling curves:} Plot success rate vs. number of agents. Attention should scale to $\approx 25$, Mamba to $\approx 30$ if the implementation is sound.
+    \item \textbf{Report with confidence bands:} Include error bars (mean ± std over 3--5 seeds) to show reliability.
+\end{enumerate}
+
+\textbf{Example results table (hypothetical):}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Method} & $N=10$ & $N=20$ & $N=25$ & $N=30$ \\
+\hline
+Baseline (tuned) & $0.45 \pm 0.05$ & $0.12 \pm 0.08$ & $0.05 \pm 0.03$ & $0.01 \pm 0.01$ \\
+Attention (tuned) & $0.62 \pm 0.04$ & $0.38 \pm 0.06$ & $0.25 \pm 0.07$ & $0.10 \pm 0.08$ \\
+Flash (tuned) & $0.60 \pm 0.05$ & $0.35 \pm 0.07$ & $0.20 \pm 0.09$ & $0.08 \pm 0.07$ \\
+Mamba (tuned) & $0.50 \pm 0.06$ & $0.18 \pm 0.10$ & $0.08 \pm 0.05$ & $0.02 \pm 0.02$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Hierarchical Local Attention (Implementation Notes)}
+\label{subsec:hier_local}
+
+We implement a hierarchical local attention variant that groups agents into small teams and performs attention at two levels: local (within-team) and global (between team leaders). This design preserves explicit pairwise relational modeling while constraining computation to local neighborhoods.
+
+Key implementation details:
+\begin{itemize}
+    \item \textbf{Team formation}: agents are partitioned into consecutive groups of size `team\_size` (last group may be smaller). Team membership is static for a single episode.
+    \item \textbf{Local attention}: for each team we apply a standard multi-head attention block to the team's agent representations. This produces `local\_out_i` for each agent.
+    \item \textbf{Leader selection}: a learned scorer produces a scalar per-agent; the top-scoring agent per team is selected as the leader (soft top-k or hard argmax may be used; we use hard selection for simplicity and interpretability).
+    \item \textbf{Global attention}: leader vectors are aggregated and a second multi-head attention is applied across leaders to produce `global\_comm_j` for each team.
+    \item \textbf{Broadcast and combine}: `global\_comm_j` is broadcast to all agents in team j, concatenated with their `local\_out_i`, and passed through a small MLP to produce the final agent state.
+    \item \textbf{Complexity}: with team size $k$ and $T$ teams, cost is approximately $O(N k d_h + T^2 d_h)$, where $N$ is total agents and $d_h$ hidden size. Choosing $k \ll N$ reduces cost vs global attention.
+\end{itemize}
+
+Practical defaults used in experiments: `team_size=5`, `attn_heads=4`, `hid_size=128`, `comm_passes=1`. We sweep `team_size` in \{4,6,8,10\} to find the best trade-off between locality bias and expressivity.
+
+
+Even after tuning, Mamba likely remains below Attention because the architectural mismatch (sequential vs. parallel) is fundamental.
+
+
+\subsection{Alternative Improvements Beyond Attention}
+\label{subsec:alternatives}
+
+If you want to explore additional methods beyond Attention/Flash/Mamba, consider:
+
+\subsubsection{Hierarchical Attention}
+
+For $N > 25$, divide agents into teams; compute attention within teams and between team leaders. Complexity: $O(k^2 + N/k \cdot k^2) = O(N \cdot k)$ where $k$ is team size.
+
+\begin{lstlisting}[language=Python, basicstyle=\small]
+class HierarchicalAttentionCommNet(nn.Module):
+    def __init__(self, args, num_inputs):
+        super().__init__()
+        self.team_size = getattr(args, 'team_size', 5)  # e.g., 5 agents per team
+        self.encoder = nn.Linear(num_inputs, args.hid_size)
+        self.team_attention = nn.MultiheadAttention(args.hid_size, 4)
+        self.leader_attention = nn.MultiheadAttention(args.hid_size, 4)
+    
+    def forward(self, x):
+        # 1. Within-team attention
+        # 2. Leader communication (top-k or mean of team leaders)
+        # 3. Broadcast leader decisions back to teams
+        pass
+\end{lstlisting}
+
+\subsubsection{Sparse / Local Attention}
+
+Agents attend only to nearby neighbors (spatial locality). Complexity: $O(N \cdot k_{\text{neighbors}})$.
+
+\begin{lstlisting}[language=Python, basicstyle=\small]
+def local_attention_mask(positions, radius=5.0):
+    # Build mask: attend only to agents within radius
+    dist = torch.cdist(positions, positions)
+    mask = (dist <= radius).float()
+    return mask
+\end{lstlisting}
+
+\subsubsection{Value Decomposition (QMIX, VDN)}
+
+Use a factored value function $V(\mathbf{s}) = \sum_i V_i(\mathbf{s}_i^{\text{local}})$ with mixing networks. This improves credit assignment.
+
+\subsubsection{Reward Shaping}
+
+Add intermediate rewards: progress toward goal, distance to obstacles, collision avoidance. These densify the reward signal and stabilize training.
+
+\subsubsection{Curriculum Learning}
+
+Gradually increase agent count or difficulty (e.g., spawn rate, intersection congestion). Combined with staged entropy (stage 1: high entropy; stage 2: low entropy), this is often the most effective simple fix.
+
+
+\section{Experiments}
+\label{sec:experiments}
+
+\textit{[To be completed with empirical results, ablation tables, and scaling curves.]}
+
+\end{content}

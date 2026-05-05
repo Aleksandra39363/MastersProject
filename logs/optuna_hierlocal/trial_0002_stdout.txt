@@ -1,0 +1,290 @@
+Using device: cuda
+GPU: NVIDIA GeForce RTX 2080 Ti
+Namespace(num_epochs=400, epoch_size=20, batch_size=256, nprocesses=1, hid_size=128, recurrent=False, gamma=1.0, tau=1.0, seed=3, normalize_rewards=False, lrate=0.00021137059440645722, entr=8.61257919259488e-06, value_coeff=0.01, env_name='traffic_junction', max_steps=500, nactions='1', action_scale=1.0, plot=False, plot_env='main', log_path='/home/dragojla/logs/optuna_hierlocal/trial_0002_seed3_log.pt', save='/home/dragojla/logs/optuna_hierlocal/trial_0002_seed3.pt', save_every=100, load='', display=False, eval_every=50, eval_epochs=20, random=False, commnet=1, ic3net=True, nagents=20, comm_mode='avg', comm_passes=3, comm_mask_zero=False, mean_ratio=1, rnn_type='MLP', detach_gap=10, comm_init='uniform', hard_attn=1, comm_action_one=False, advantages_per_action=False, share_weights=False, use_agent_attn=False, attn_heads=4, flash=False, flash_attn_dropout=0.0, flash_gate_init=0.1, mamba=False, mamba_dropout=0.1, hier_local_attn=True, team_size=5, max_grad_norm=0.9879954961448965, dim=20, vision=2, add_rate_min=1.0, add_rate_max=1.0, curr_start=0, curr_end=0, crash_penalty=-15.0, terminal_reward=15.0, difficulty='medium', vocab_type='bool', nfriendly=20, num_actions=[2, 2], dim_actions=2, num_inputs=2077, continuous=False, naction_heads=[2, 2], device=device(type='cuda'))
+====================================================================================================
+Model log:
+
+HierarchicalAttentionCommNet(
+  (encoder): Linear(in_features=2077, out_features=128, bias=True)
+  (local_attention): MultiheadAttention(
+    (out_proj): NonDynamicallyQuantizableLinear(in_features=128, out_features=128, bias=True)
+  )
+  (leader_score): Sequential(
+    (0): Linear(in_features=128, out_features=128, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=128, out_features=1, bias=True)
+  )
+  (global_attention): MultiheadAttention(
+    (out_proj): NonDynamicallyQuantizableLinear(in_features=128, out_features=128, bias=True)
+  )
+  (broadcast): Sequential(
+    (0): Linear(in_features=256, out_features=128, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (action_heads): ModuleList(
+    (0-1): 2 x Linear(in_features=128, out_features=2, bias=True)
+  )
+  (value_head): Linear(in_features=128, out_features=1, bias=True)
+)
+====================================================================================================
+
+Starting training now...
+======================================================================
+Epoch    1 | Time: 293.67s
+----------------------------------------------------------------------
+  Per-Agent Rewards (epoch avg): [  1.17   1.17   1.60   1.28   0.85   1.06   0.85   1.06   1.60   1.49   0.43   1.70   1.06   1.17   0.75   1.06   1.06   0.64   0.42   1.07]
+  Avg Reward (epoch):     1.07  
+  Avg Completion:         7.2%  (epoch avg)
+  Avg Crashes:          441.09  (epoch avg per episode)
+  Avg Episode Steps:     39.73  (epoch avg)
+  Communication:        46.8%  (epoch avg)
+======================================================================
+======================================================================
+Epoch    2 | Time: 297.29s
+----------------------------------------------------------------------
+  Per-Agent Rewards (epoch avg): [  1.87   0.94   2.23   1.05   0.47   1.29   1.05   1.29   1.29   1.29   1.05   1.41   0.82   1.29   0.82   1.17   0.70   1.41   1.05   1.05]
+  Avg Reward (epoch):     1.18  
+  Avg Completion:         7.9%  (epoch avg)
+  Avg Crashes:          492.21  (epoch avg per episode)
+  Avg Episode Steps:     44.22  (epoch avg)
+  Communication:        46.1%  (epoch avg)
+======================================================================
+======================================================================
+Epoch    3 | Time: 291.65s
+----------------------------------------------------------------------
+  Per-Agent Rewards (epoch avg): [  0.89   0.63   1.65   0.38   1.14   0.38   1.27   0.63   0.38   1.14   1.01   0.25   0.89   1.14   1.01   1.01   1.65   0.63   1.14   1.78]
+  Avg Reward (epoch):     0.95  
+  Avg Completion:         6.4%  (epoch avg)
+  Avg Crashes:          506.55  (epoch avg per episode)
+  Avg Episode Steps:     47.57  (epoch avg)
+  Communication:        44.2%  (epoch avg)
+======================================================================
+======================================================================
+Epoch    4 | Time: 302.93s
+----------------------------------------------------------------------
+  Per-Agent Rewards (epoch avg): [  2.28   0.94   0.94   0.80   1.60   0.93   1.34   0.67   0.67   0.93   1.34   1.07   1.20   1.07   1.07   0.80   1.47   1.47   0.93   1.07]
+  Avg Reward (epoch):     1.13  
+  Avg Completion:         7.6%  (epoch avg)
+  Avg Crashes:          560.81  (epoch avg per episode)
+  Avg Episode Steps:     51.58  (epoch avg)
+  Communication:        45.0%  (epoch avg)
+======================================================================
+======================================================================
+Epoch    5 | Time: 289.69s
+----------------------------------------------------------------------
+  Per-Agent Rewards (epoch avg): [  1.03   1.02   1.54   1.41   1.02   1.28   1.41   1.02   1.41   1.28   1.15   0.38   1.28   1.02   1.28   0.64   0.51   1.15   1.15   0.77]
+  Avg Reward (epoch):     1.09  
+  Avg Completion:         7.3%  (epoch avg)
+  Avg Crashes:          511.04  (epoch avg per episode)
+  Avg Episode Steps:     47.52  (epoch avg)
+  Communication:        44.7%  (epoch avg)
+======================================================================
+======================================================================
+Epoch    6 | Time: 294.60s
+----------------------------------------------------------------------
+  Per-Agent Rewards (epoch avg): [  1.28   1.15   1.03   1.79   0.90   1.02   1.41   0.77   1.02   0.90   0.77   0.51   1.92   1.28   0.90   0.64   0.77   1.03   0.64   1.02]
+  Avg Reward (epoch):     1.04  
+  Avg Completion:         7.0%  (epoch avg)
+  Avg Crashes:          528.57  (epoch avg per episode)
+  Avg Episode Steps:     48.16  (epoch avg)
+  Communication:        44.3%  (epoch avg)
+======================================================================
+======================================================================
+Epoch    7 | Time: 278.03s
+----------------------------------------------------------------------
+  Per-Agent Rewards (epoch avg): [  1.25   1.75   0.87   1.25   1.12   1.50   1.62   1.25   0.87   1.00   1.13   1.87   0.75   1.12   1.38   0.62   1.75   0.87   1.12   2.00]
+  Avg Reward (epoch):     1.26  
+  Avg Completion:         8.4%  (epoch avg)
+  Avg Crashes:          511.15  (epoch avg per episode)
+  Avg Episode Steps:     46.66  (epoch avg)
+  Communication:        44.6%  (epoch avg)
+======================================================================
+======================================================================
+Epoch    8 | Time: 296.35s
+----------------------------------------------------------------------
+  Per-Agent Rewards (epoch avg): [  1.27   0.80   1.27   1.15   1.61   0.69   1.04   0.46   0.92   0.81   1.27   0.69   0.69   0.92   1.15   1.15   1.04   1.61   1.27   0.92]
+  Avg Reward (epoch):     1.04  
+  Avg Completion:         7.0%  (epoch avg)
+  Avg Crashes:          480.30  (epoch avg per episode)
+  Avg Episode Steps:     43.68  (epoch avg)
+  Communication:        44.4%  (epoch avg)
+======================================================================
+======================================================================
+Epoch    9 | Time: 288.81s
+----------------------------------------------------------------------
+  Per-Agent Rewards (epoch avg): [  0.43   0.87   0.65   0.98   0.76   1.31   1.20   1.31   1.09   0.98   0.98   1.30   1.20   0.98   0.87   0.76   0.98   0.54   0.87   1.30]
+  Avg Reward (epoch):     0.97  
+  Avg Completion:         6.5%  (epoch avg)
+  Avg Crashes:          438.45  (epoch avg per episode)
+  Avg Episode Steps:     39.96  (epoch avg)
+  Communication:        44.7%  (epoch avg)
+======================================================================
+======================================================================
+Epoch   10 | Time: 285.90s
+----------------------------------------------------------------------
+  Per-Agent Rewards (epoch avg): [  1.47   1.47   0.68   1.24   0.90   1.47   1.13   1.02   1.24   0.90   1.24   1.24   1.58   1.24   0.56   1.13   1.24   1.24   0.90   1.24]
+  Avg Reward (epoch):     1.16  
+  Avg Completion:         7.8%  (epoch avg)
+  Avg Crashes:          455.84  (epoch avg per episode)
+  Avg Episode Steps:     41.42  (epoch avg)
+  Communication:        46.5%  (epoch avg)
+======================================================================
+======================================================================
+Epoch   20 | Time: 279.71s
+----------------------------------------------------------------------
+  Per-Agent Rewards (epoch avg): [  0.86   0.60   1.29   1.46   1.03   0.43   1.20   1.03   1.80   1.46   1.12   0.43   0.69   1.20   1.29   1.20   0.69   0.94   1.12   1.12]
+  Avg Reward (epoch):     1.05  
+  Avg Completion:         7.0%  (epoch avg)
+  Avg Crashes:          357.22  (epoch avg per episode)
+  Avg Episode Steps:     31.32  (epoch avg)
+  Communication:        52.4%  (epoch avg)
+======================================================================
+======================================================================
+Epoch   30 | Time: 278.70s
+----------------------------------------------------------------------
+  Per-Agent Rewards (epoch avg): [  2.39   2.79   3.19   3.19   2.79   2.46   3.39   3.53   2.39   2.93   3.13   2.33   2.33   2.26   2.66   3.19   3.39   2.86   2.73   1.93]
+  Avg Reward (epoch):     2.79  
+  Avg Completion:        18.7%  (epoch avg)
+  Avg Crashes:          197.60  (epoch avg per episode)
+  Avg Episode Steps:     23.77  (epoch avg)
+  Communication:        92.3%  (epoch avg)
+======================================================================
+======================================================================
+Epoch   40 | Time: 280.42s
+----------------------------------------------------------------------
+  Per-Agent Rewards (epoch avg): [  2.83   2.25   2.50   2.83   2.89   2.12   2.31   3.47   2.38   2.57   2.83   2.96   3.34   2.70   2.70   3.02   2.63   2.31   2.57   2.57]
+  Avg Reward (epoch):     2.69  
+  Avg Completion:        18.0%  (epoch avg)
+  Avg Crashes:          181.02  (epoch avg per episode)
+  Avg Episode Steps:     22.93  (epoch avg)
+  Communication:        95.1%  (epoch avg)
+======================================================================
+======================================================================
+Epoch   50 | Time: 275.99s
+----------------------------------------------------------------------
+  Per-Agent Rewards (epoch avg): [  2.40   2.72   2.98   2.85   3.56   2.53   3.43   2.66   3.05   2.40   2.85   2.27   2.40   2.07   2.98   3.05   2.07   2.85   2.72   3.37]
+  Avg Reward (epoch):     2.76  
+  Avg Completion:        18.4%  (epoch avg)
+  Avg Crashes:          185.13  (epoch avg per episode)
+  Avg Episode Steps:     23.18  (epoch avg)
+  Communication:        95.0%  (epoch avg)
+  Eval over 20 epochs: Reward    2.60 | Success    0.0% | Completion   17.4% | Crashes  188.03
+======================================================================
+======================================================================
+Epoch   60 | Time: 277.04s
+----------------------------------------------------------------------
+  Per-Agent Rewards (epoch avg): [  2.71   2.26   2.71   2.71   2.77   2.52   2.52   2.19   3.68   2.26   1.74   3.03   3.55   2.26   3.36   3.03   3.16   2.77   3.55   3.03]
+  Avg Reward (epoch):     2.79  
+  Avg Completion:        18.6%  (epoch avg)
+  Avg Crashes:          180.18  (epoch avg per episode)
+  Avg Episode Steps:     23.06  (epoch avg)
+  Communication:        94.7%  (epoch avg)
+======================================================================
+======================================================================
+Epoch   70 | Time: 307.99s
+----------------------------------------------------------------------
+  Per-Agent Rewards (epoch avg): [  2.37   3.07   2.17   2.43   2.17   2.88   2.62   2.30   2.43   2.56   1.79   2.49   1.98   2.62   1.92   2.30   2.24   2.69   2.88   2.62]
+  Avg Reward (epoch):     2.43  
+  Avg Completion:        16.2%  (epoch avg)
+  Avg Crashes:          194.01  (epoch avg per episode)
+  Avg Episode Steps:     22.87  (epoch avg)
+  Communication:        92.6%  (epoch avg)
+======================================================================
+======================================================================
+Epoch   80 | Time: 286.74s
+----------------------------------------------------------------------
+  Per-Agent Rewards (epoch avg): [  2.61   2.81   2.55   2.42   3.01   2.35   3.20   3.66   2.81   2.75   2.48   2.22   2.03   2.61   3.07   2.48   2.61   2.81   3.20   2.03]
+  Avg Reward (epoch):     2.69  
+  Avg Completion:        17.9%  (epoch avg)
+  Avg Crashes:          188.10  (epoch avg per episode)
+  Avg Episode Steps:     23.31  (epoch avg)
+  Communication:        94.5%  (epoch avg)
+======================================================================
+======================================================================
+Epoch   90 | Time: 295.14s
+----------------------------------------------------------------------
+  Per-Agent Rewards (epoch avg): [  2.59   2.20   2.98   2.07   2.79   2.46   1.94   2.85   2.85   1.88   2.72   3.69   2.46   2.85   2.66   2.40   2.92   2.66   2.98   2.79]
+  Avg Reward (epoch):     2.64  
+  Avg Completion:        17.6%  (epoch avg)
+  Avg Crashes:          184.06  (epoch avg per episode)
+  Avg Episode Steps:     23.07  (epoch avg)
+  Communication:        94.2%  (epoch avg)
+======================================================================
+======================================================================
+Epoch  100 | Time: 313.20s
+----------------------------------------------------------------------
+  Per-Agent Rewards (epoch avg): [  2.70   2.83   2.38   2.89   2.70   2.12   2.50   1.99   2.51   2.76   2.83   2.18   2.63   2.89   2.12   3.08   2.83   2.89   2.83   2.31]
+  Avg Reward (epoch):     2.60  
+  Avg Completion:        17.4%  (epoch avg)
+  Avg Crashes:          192.79  (epoch avg per episode)
+  Avg Episode Steps:     23.15  (epoch avg)
+  Communication:        93.3%  (epoch avg)
+  Eval over 20 epochs: Reward    2.54 | Success    0.0% | Completion   17.0% | Crashes  185.84
+======================================================================
+======================================================================
+Epoch  150 | Time: 314.30s
+----------------------------------------------------------------------
+  Per-Agent Rewards (epoch avg): [  3.11   2.27   2.66   2.53   2.85   3.50   2.66   3.11   2.59   3.31   2.85   3.44   1.88   2.53   2.33   2.46   3.24   3.31   3.24   3.11]
+  Avg Reward (epoch):     2.85  
+  Avg Completion:        19.0%  (epoch avg)
+  Avg Crashes:          188.22  (epoch avg per episode)
+  Avg Episode Steps:     23.30  (epoch avg)
+  Communication:        94.3%  (epoch avg)
+  Eval over 20 epochs: Reward    2.82 | Success    0.0% | Completion   18.9% | Crashes  185.57
+======================================================================
+======================================================================
+Epoch  200 | Time: 297.95s
+----------------------------------------------------------------------
+  Per-Agent Rewards (epoch avg): [  3.76   2.40   3.18   2.72   2.72   2.92   2.01   2.33   3.76   2.66   2.66   2.85   2.33   2.27   2.85   2.85   2.20   2.40   2.27   2.59]
+  Avg Reward (epoch):     2.69  
+  Avg Completion:        17.9%  (epoch avg)
+  Avg Crashes:          197.31  (epoch avg per episode)
+  Avg Episode Steps:     23.07  (epoch avg)
+  Communication:        91.6%  (epoch avg)
+  Eval over 20 epochs: Reward    2.79 | Success    0.0% | Completion   18.6% | Crashes  207.05
+======================================================================
+======================================================================
+Epoch  250 | Time: 379.30s
+----------------------------------------------------------------------
+  Per-Agent Rewards (epoch avg): [  2.54   2.67   2.86   2.99   2.93   3.25   2.60   3.06   2.54   2.80   2.99   3.06   2.47   3.25   2.21   2.80   2.28   2.47   2.15   2.54]
+  Avg Reward (epoch):     2.72  
+  Avg Completion:        18.2%  (epoch avg)
+  Avg Crashes:          188.95  (epoch avg per episode)
+  Avg Episode Steps:     23.03  (epoch avg)
+  Communication:        93.6%  (epoch avg)
+  Eval over 20 epochs: Reward    2.63 | Success    0.0% | Completion   17.6% | Crashes  188.75
+======================================================================
+======================================================================
+Epoch  300 | Time: 371.99s
+----------------------------------------------------------------------
+  Per-Agent Rewards (epoch avg): [  2.28   2.28   2.16   2.22   3.43   2.41   2.35   2.47   2.09   3.24   2.98   2.28   2.03   2.41   2.66   2.73   2.03   2.66   2.35   2.66]
+  Avg Reward (epoch):     2.49  
+  Avg Completion:        16.6%  (epoch avg)
+  Avg Crashes:          184.61  (epoch avg per episode)
+  Avg Episode Steps:     22.54  (epoch avg)
+  Communication:        92.9%  (epoch avg)
+  Eval over 20 epochs: Reward    2.54 | Success    0.0% | Completion   17.0% | Crashes  188.71
+======================================================================
+======================================================================
+Epoch  350 | Time: 375.30s
+----------------------------------------------------------------------
+  Per-Agent Rewards (epoch avg): [  2.78   1.96   2.59   3.22   2.46   2.40   2.78   2.02   2.59   2.08   2.02   2.34   2.65   2.65   2.46   2.84   2.46   2.27   2.84   3.28]
+  Avg Reward (epoch):     2.54  
+  Avg Completion:        16.9%  (epoch avg)
+  Avg Crashes:          184.98  (epoch avg per episode)
+  Avg Episode Steps:     22.46  (epoch avg)
+  Communication:        92.1%  (epoch avg)
+  Eval over 20 epochs: Reward    2.76 | Success    0.0% | Completion   18.4% | Crashes  186.51
+======================================================================
+======================================================================
+Epoch  400 | Time: 370.87s
+----------------------------------------------------------------------
+  Per-Agent Rewards (epoch avg): [  2.08   2.27   2.59   3.03   2.65   2.91   3.16   3.16   2.78   2.08   2.97   2.84   3.16   2.27   1.96   2.78   2.72   2.84   2.34   2.53]
+  Avg Reward (epoch):     2.66  
+  Avg Completion:        17.7%  (epoch avg)
+  Avg Crashes:          186.12  (epoch avg per episode)
+  Avg Episode Steps:     22.59  (epoch avg)
+  Communication:        91.8%  (epoch avg)
+  Eval over 20 epochs: Reward    2.57 | Success    0.0% | Completion   17.2% | Crashes  189.46
+======================================================================

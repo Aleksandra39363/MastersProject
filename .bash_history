@@ -1,346 +1,3 @@
-python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt --agent_counts 2 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt --agent_counts 2 
-python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt --agent_counts 2 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-deletecrashedcars3easy.pt run_log_10agents-deletecrashedcars3.pt run_log_20agents-deletecrashedcars3hard.pt --agent_counts 5 10 20 --smooth 100
-python3 main.py --env_name traffic_junction --nagents 10 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 500 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 12 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --save model_10agents-deletecrashedcars3-2.pt --log_path run_log_10agents-deletecrashedcars3-2.pt
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-WithAtn3easy2.pt run_log_10agents-WithAtn3-2.pt --agent_counts 5 10 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-WithAtn3easy2.pt run_log_10agents-WithAtn3-2.pt --agent_counts 5 10 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-WithAtn3easy2.pt run_log_10agents-WithAtn3-2.pt --agent_counts 5 10 --smooth 100
-tmux
-tmux
-tmux
-tmux
-tmux
-tmux
-tmux
-python3 visualize_training.py --compare-scaling --log_files run_log_5agents-15.pt run_log_10agents-15.pt run_log_20agents-15medium.pt --agent_counts 5 10 20 --smooth 100
-git commit -m "working version, 0 penalty, +15 reward"
-git add .
-git commit -m "working version, 0 penalty, +15 reward"
-tmux
-git add .
-git commit -m "changed visualisatio"
-git add .
-git commit 'm "added evaluation"
-
-git commit -m "added evaluation"
-
-git add .
-git commit -m "added evaluation"
-git status
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 4 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 20 --max_steps 1000 --ic3net --vision 2 --difficulty hard --crash_penalty -15 --terminal_reward 15 --seed $s --save model_20hardagents_seed${s}.pt --log_path run_log_20hardagents_seed${s}.pt; done
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 4 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 21 --max_steps 1000 --ic3net --vision 2 --difficulty hard --crash_penalty -15 --terminal_reward 15 --seed $s --save model_20hardagents_seed${s}.pt --log_path run_log_20hardagents_seed${s}.pt; done
-tmux
-tmux
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 10 --max_steps 300 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_5mediumagents_seed${s}.pt --log_path run_log_5mediumagents_seed${s}.pt; done
-tmux
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 4 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 20 --max_steps 1000 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_20mediumagents_seed${s}.pt --log_path run_log_20mediumagents_seed${s}.pt; done
-tmux
-tmux
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 10 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 14 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_10agents_seed${s}.pt --log_path run_log_10agents_seed${s}.pt; done
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 10 --max_steps 300 --ic3net --vision 2 --difficulty easy --crash_penalty -15 --terminal_reward 15 --seed $s --save model_5easyagents_seed${s}.pt --log_path run_log_5easyagents_seed${s}.pt; done
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 4 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 21 --max_steps 1000 --ic3net --vision 2 --difficulty hard --crash_penalty -15 --terminal_reward 15 --seed $s --save model_20hardagents_seed${s}.pt --log_path run_log_20hardagents_seed${s}.pt; done
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 4 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 20 --max_steps 1000 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_20mediumagents_seed${s}.pt --log_path run_log_20mediumagents_seed${s}.pt; done
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 10 --max_steps 300 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_5mediumagents_seed${s}.pt --log_path run_log_5mediumagents_seed${s}.pt; done
-tmux
-tmux
-tmux
-tmux
-tmux
-tmux attach -t 4
-tmux attach -t 4
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed1.pt run_log_10agents-seed1.pt run_log_20hardagents-seed1.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed1.pt run_log_10agents-seed1.pt run_log_20hardagents-seed1.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed1.pt run_log_10agents_seed1.pt run_log_20hardagents_seed1.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed1.pt run_log_10agents_seed1.pt run_log_20hardagents_seed1.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed1.pt run_log_10agents_seed1.pt run_log_20hardagents_seed1.pt --agent_counts 5 10 20 --smooth 100
-tmux ls
-tmux kill -8
-tmux kill-session -t 8
-tmux kill-session -t 9
-tmux kill-session -t 10
-tmux kill-session -t 11
-tmux kill-session -t 12
-tmux ls
-tmux
-tmux ls
-tmux ls
-tmux attach -t 4
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 10 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 14 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_10agents_seed${s}.pt --log_path run_log_10agents_seed${s}.pt; done
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 10 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.0001 --dim 14 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_10agents_seed${s}.pt --log_path run_log_10agents_seed${s}.pt; done
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 10 --max_steps 300 --ic3net --vision 2 --difficulty easy --crash_penalty -15 --terminal_reward 15 --seed $s --save model_5easyagents_seed${s}.pt --log_path run_log_5easyagents_seed${s}.pt; done
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 256 --detach_gap 10 --lrate 0.0001 --dim 21 --max_steps 1000 --ic3net --vision 2 --difficulty hard --crash_penalty -15 --terminal_reward 15 --seed $s --save model_20hardagents_seed${s}.pt --log_path run_log_20hardagents_seed${s}.pt; done
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 256 --detach_gap 10 --lrate 0.0001 --dim 20 --max_steps 1000 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_20mediumagents_seed${s}.pt --log_path run_log_20mediumagents_seed${s}.pt; done
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 10 --max_steps 300 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_5mediumagents_seed${s}.pt --log_path run_log_5mediumagents_seed${s}.pt; done
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 10 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 14 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_10agents_seed${s}.pt --log_path run_log_10agents_seed${s}.pt; done
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 10 --max_steps 300 --ic3net --vision 2 --difficulty easy --crash_penalty -15 --terminal_reward 15 --seed $s --save model_5easyagents_seed${s}.pt --log_path run_log_5easyagents_seed${s}.pt; done
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed1.pt run_log_10agents_seed1.pt run_log_20hardagents_seed1.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed2.pt run_log_10agents_seed2.pt run_log_20hardagents_seed2.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed3.pt run_log_10agents_seed3.pt run_log_20hardagents_seed3.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed2.pt run_log_10agents_seed2.pt run_log_20hardagents_seed2.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed1.pt run_log_10agents_seed1.pt run_log_20hardagents_seed1.pt --agent_counts 5 10 20 --smooth 100
-tmux -ls
-tmux ls
-tmux kill-session -t 13
-tmux kill-session -t 14
-tmux kill-session -t 15
-tmux kill-session -t 16
-tmux kill-session -t 17
-tmux kill-session -t 18
-tmux -ls
-tmux ls
-tmux 
-tmux
-tmux ls
-tmux kill-session -t 19
-tmux kill-session -t 20
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 256 --detach_gap 10 --lrate 0.00005 --dim 20 --max_steps 1000 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_20mediumagents_seed${s}.pt --log_path run_log_20mediumagents_seed${s}.pt; done
-tmux
-tmux
-tmux
-tmux
-tmux
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 256 --detach_gap 10 --lrate 0.00005 --dim 21 --max_steps 1000 --ic3net --vision 2 --difficulty hard --crash_penalty -15 --terminal_reward 15 --seed $s --save model_20hardagents_seed${s}.pt --log_path run_log_20hardagents_seed${s}.pt; done
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 256 --detach_gap 10 --lrate 0.00005 --dim 20 --max_steps 1000 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_20mediumagents_seed${s}.pt --log_path run_log_20mediumagents_seed${s}.pt; done
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 20 --max_steps 1000 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_20mediumagents_seed${s}.pt --log_path run_log_20mediumagents_seed${s}.pt; done
-tmux
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed1.pt run_log_10agents_seed1.pt run_log_20hardagents_seed1.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed1.pt run_log_10agents_seed1.pt run_log_20mediumagents_seed1.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed1.pt run_log_10agents_seed1.pt run_log_20hardagents_seed1.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed1.pt run_log_10agents_seed1.pt run_log_20mediumagents_seed1.pt --agent_counts 5 10 20 --smooth 100
-tmux attach -t 4
-tmux -ls
-tmux ls
-tmux kill-session -t 23
-tmux kill-session -t 24
-tmux
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 10 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 14 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_10agents_seed${s}.pt --log_path run_log_10agents_seed${s}.pt; done
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 10 --max_steps 300 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_5mediumagents_seed${s}.pt --log_path run_log_5mediumagents_seed${s}.pt; done
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 21 --max_steps 1000 --ic3net --vision 2 --difficulty hard --crash_penalty -15 --terminal_reward 15 --seed $s --save model_20hardagents_seed${s}.pt --log_path run_log_20hardagents_seed${s}.pt; done
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 20 --max_steps 1000 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_20mediumagents_seed${s}.pt --log_path run_log_20mediumagents_seed${s}.pt; done
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 3000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 21 --max_steps 1000 --ic3net --vision 2 --difficulty hard --crash_penalty -15 --terminal_reward 15 --seed $s --save model_20hardagents_seed${s}.pt --log_path run_log_20hardagents_seed${s}.pt; done
-tmux
-tmux
-python3 visualize_training.py --compare-scaling --log_files run_log_5mediumagents_seed1.pt run_log_10agents_seed1.pt run_log_20mediumagents_seed1.pt --agent_counts 5 10 20 --smooth 100
-tmux ls
-python3 visualize_training.py --compare-scaling --log_files run_log_5mediumagents_seed1.pt run_log_10agents_seed1.pt run_log_20mediumagents_seed1.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5mediumagents_seed2.pt --agent_counts 5 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed2.pt --agent_counts 5 --smooth 100
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 3000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 20 --max_steps 1000 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_20mediumagents_seed${s}.pt --log_path run_log_20mediumagents_seed${s}.pt; done
-tmux
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed1.pt run_log_10agents_seed1.pt run_log_20mediumagents_seed1.pt --agent_counts 5 10 20 --smooth 100
-git commit -m "first eval try"
-git add .
-git commit -m "first eval try"
-git add .
-git comit -m "eval does not change training"
-git commit -m "eval does not change training"
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed1.pt run_log_10agents_seed1.pt run_log_20mediumagents_seed1.pt --agent_counts 5 10 20 --smooth 100
-tmux 'ls
-tmux -ls
-tmux ls
-tmux kill-session -t 21
-tmux kill-session -t 25
-tmux kill-session -t 26
-tmux kill-session -t 27
-tmux
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed1.pt run_log_10agents_seed1.pt run_log_20mediumagents_seed1.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed1.pt run_log_10agents_seed1.pt run_log_20mediumagents_seed1.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed1.pt run_log_5easyagents_seed2.pt run_log_5easyagents_seed3.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed1.pt run_log_10agents_seed1.pt run_log_20mediumagents_seed1.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed1.pt run_log_10agents_seed1.pt run_log_20mediumagents_seed1.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed2.pt run_log_10agents_seed2.pt run_log_20mediumagents_seed1.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed2.pt run_log_10agents_seed2.pt run_log_20mediumagents_seed1.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed3.pt run_log_10agents_seed2.pt run_log_20mediumagents_seed1.pt --agent_counts 5 10 20 --smooth 100
-tmux -ls
-tmux ls
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed1.pt run_log_10agents_seed1.pt run_log_20mediumagents_seed1.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed2.pt run_log_10agents_seed2.pt run_log_20mediumagents_seed1.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed3.pt run_log_10agents_seed3.pt run_log_20mediumagents_seed1.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed4.pt run_log_10agents_seed3.pt run_log_20mediumagents_seed1.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed5.pt run_log_10agents_seed3.pt run_log_20mediumagents_seed1.pt --agent_counts 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5mediumagents_seed5.pt run_log_10agents_seed3.pt run_log_20mediumagents_seed1.pt --agent_counts 5 10 20 --smooth 100
-tmux ls
-tmux attach -t 0
-python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 500 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 10 --max_steps 300 --ic3net --vision 2 --difficulty easy --crash_penalty -15 --terminal_reward 15 --save model_5agents-15.pt --log_path run_log_5agents-15.pt
-python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 10 --max_steps 300 --ic3net --vision 2 --difficulty easy --crash_penalty -15 --terminal_reward 15 --save model_5agents-15.pt --log_path run_log_5agents-15.pt
-python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 18 --max_steps 1000 --ic3net --vision 2 --difficulty hard --crash_penalty -15 --terminal_reward 15 --save model_20agents-15.pt --log_path run_log_20agents-15.pt
-python3 main.py --env_name traffic_junction --nagents 10 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 3 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 12 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --save model_10agents-15.pt --log_path run_log_10agents-15.pt
-python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 18 --max_steps 1000 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --save model_20agents-15medium.pt --log_path run_log_20agents-15medium.pt
-python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 10 --max_steps 300 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --save model_5agents-15medium.pt --log_path run_log_5agents-15medium.pt
-tmux
-git add .
-git restore main.py
-git checkout 52c49399e8920c5e9e45e49721c967d95156a6b4 -- main.py
-git show 52c49399e8920c5e9e45e49721c967d95156a6b4:main.py
-git log
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 10 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 2000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 14 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --use_agent_attn --attn_heads 4 --save model_10agents_Atnseed${s}.pt --log_path run_log_10agents_Atnseed${s}.pt; done
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 10 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 2000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 14 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --use_agent_attn --attn_heads 4 --save model_10agents_Atnseed${s}.pt --log_path run_log_10agents_Atnseed${s}.pt; done
-tmux
-tmux
-tmux
-tmux ls
-tmux kill-session -t 32
-tmux
-tmux ls
-tmux kill-session -t 0
-tmux kill-session -t 1
-tmux kill-session -t 2
-tmux kill-session -t 3
-tmux kill-session -t 4
-tmux kill-session -t 5
-tmux kill-session -t 6
-tmux kill-session -t 7
-tmux ls
-tmux
-tmux
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 3000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 21 --max_steps 1000 --ic3net --vision 2 --difficulty hard --crash_penalty -15 --terminal_reward 15 --seed $s --save model_20hardagents_seed${s}.pt --log_path run_log_20hardagents_seed${s}.pt; done
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 10 --max_steps 300 --ic3net --vision 2 --difficulty easy --crash_penalty -15 --terminal_reward 15 --seed $s --use_agent_attn --attn_heads 4--save model_5easyagents_Atnseed${s}.pt --log_path run_log_5easyagents_Atnseed${s}.pt; done
-python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt run_log_5agents-NoAtn3easy2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3hard2.pt --agent_counts 2 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt run_log_5agents-NoAtn3easy2.pt run_log_10agents-pasthope3-2.pt run_log_20agents-deletecrashedcars3hard2.pt --agent_counts 2 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt run_log_5agents-NoAtn3easy2.pt run_log_10agents-pasthope3-2.pt run_log_20agents-deletecrashedcars3hard.pt --agent_counts 2 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt run_log_5agents-NoAtn3easy2.pt run_log_10agents-pasthope3-2.pt run_log_20agents-deletecrashedcars3medium.pt --agent_counts 2 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt run_log_5agents-NoAtn3easy2.pt run_log_10agents-pasthope3-2.pt run_log_20agents-deletecrashedcars3hard.pt --agent_counts 2 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt run_log_5agents-pasthope3easy2.pt run_log_10agents-pasthope3-2.pt run_log_20agents-deletecrashedcars3hard.pt --agent_counts 2 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt run_log_5agents-pasthope3easy2.pt run_log_10agents-pasthope3-2.pt run_log_20agents-deletecrashedcars3hard2.pt --agent_counts 2 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt run_log_5agents-pasthope3easy2.pt run_log_10agents-pasthope3-2.pt run_log_20agents-deletecrashedcars3hard.pt --agent_counts 2 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt run_log_5agents-pasthope3easy2.pt run_log_10agents-pasthope3-2.pt run_log_20agents-deletecrashedcars3medium.pt --agent_counts 2 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt run_log_5agents-pasthope3easy2.pt run_log_10agents-pasthope3-2.pt run_log_20agents-deletecrashedcars3hard.pt --agent_counts 2 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt run_log_5agents-pasthope3easy2.pt run_log_10agents-pasthope3-2.pt run_log_20agents-deletecrashedcars3hard2.pt --agent_counts 2 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt run_log_5agents-pasthope3easy2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3hard.pt --agent_counts 2 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt run_log_5agents-pasthope3easy2.pt run_log_10agents-pasthope3-2.pt run_log_20agents-deletecrashedcars3hard2.pt --agent_counts 2 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt run_log_5agents-pasthope3easy2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3hard.pt --agent_counts 2 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt run_log_5agents-pasthope3easy2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3hard.pt --agent_counts 2 5 10 20 --smooth 100
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 3000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 21 --max_steps 1000 --ic3net --vision 2 --difficulty hard --crash_penalty -15 --terminal_reward 15 --seed $s --use_agent_attn --attn_heads 4--save model_20hardagents_Atnseed${s}.pt --log_path run_log_20hardagents_Atnseed${s}.pt; done
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 3000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 20 --max_steps 1000 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --use_agent_attn --attn_heads 4 --save model_20mediumagents_Atnseed${s}.pt --log_path run_log_20mediumagents_Atnseed${s}.pt; done
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 10 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 2000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 14 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --use_agent_attn --attn_heads 4 --save model_10agents_Atnseed${s}.pt --log_path run_log_10agents_Atnseed${s}.pt; done
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 10 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 2000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 14 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_10agents_seed${s}.pt --log_path run_log_10agents_seed${s}.pt; done
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 10 --max_steps 300 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --use_agent_attn --attn_heads 4 --save model_5mediumagents_Atnseed${s}.pt --log_path run_log_5mediumagents_Atnseed${s}.pt; done
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 3000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 20 --max_steps 1000 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_20mediumagents_seed${s}.pt --log_path run_log_20mediumagents_seed${s}.pt; done
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 10 --max_steps 300 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_5mediumagents_seed${s}.pt --log_path run_log_5mediumagents_seed${s}.pt; done
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 10 --max_steps 300 --ic3net --vision 2 --difficulty easy --crash_penalty -15 --terminal_reward 15 --seed $s --save model_5easyagents_seed${s}.pt --log_path run_log_5easyagents_seed${s}.pt; done
-git remote -v
-git remote remove origin
-git remote add origin https://github.com/Aleksandra39363/MastersProject.git
-git remote -v
-git push -u origin main
-git branch
-git push -u origin master
-git rm -r --cached .vscode-server
-git commit -m "Remove vscode server files"
-git add visualize_training.py
-git checkout HEAD~1 -- visualize_training.py
-git add visualize_training.py
-git commit -m "Restore visualization"
-git push -f origin master
-rm -rf .git
-git init
-git add .
-git commit -m "Initial clean commit"
-git branch -M master
-git remote add origin https://github.com/Aleksandra39363/MastersProject.git
-git push -u origin master
-python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt run_log_5agents-pasthope3easy2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3hard.pt --agent_counts 2 5 10 20 --smooth 100
-conda env
-conda activate thesis
-which conda
-module load anaconda
-ls
-source thesis/bin/activate
-ls thesis/bin
-which conda
-conda activate multiagent
-source multiagent/bin/activate
-python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt run_log_5agents-pasthope3easy2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3hard.pt --agent_counts 2 5 10 20 --smooth 100
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-bash Miniconda3-latest-Linux-x86_64.sh
-source ~/.bashrc
-conda --version
-conda activate thesis
-conda deactivate
-conda deactivate
-conda activate thesis
-tmux
-conda activate thesis
-for s in 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 10 --max_steps 300 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --use_agent_attn --attn_heads 4 --save model_5mediumagents_Atnseed${s}.pt --log_path run_log_5mediumagents_Atnseed${s}.pt; done
-conda activate thesis
-tmux
-conda activate thesis
-tmux
-conda create -n project python=3.12 -y
-conda activate project
-conda create -n project python=3.12 -y
-conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
-conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
-conda create -n thesis python=3.12 -y
-conda activate thesis
-pip install -r requirements.txt
-conda install -c conda-forge --file requirements.txt
-pip install -r requirements.txt
-pip install --upgrade pip setuptools wheel
-pip install visdom
-pip install -r requirements.txt
-pip install -r requirements.txt
-pip install -r requirements.txt
-python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt run_log_5agents-pasthope3easy2.pt run_log_10agents-deletecrashedcars3-2.pt run_log_20agents-deletecrashedcars3hard.pt --agent_counts 2 5 10 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed1.pt run_log_5easyagents_seed2.pt run_log_5easyagents_seed3.pt run_log_4easyagents_seed5.pt run_log_5easyagents_seed5.pt --agent_counts 5 5 5 5 5 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5mediumagents_seed1.pt run_log_5mediumagents_seed2.pt run_log_5mediumagents_seed3.pt run_log_4mediumagents_seed5.pt run_log_5mediumagents_seed5.pt --agent_counts 5 5 5 5 5 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5easyagents_seed1.pt run_log_5easyagents_seed2.pt run_log_5easyagents_seed3.pt run_log_5easyagents_seed4.pt run_log_5easyagents_seed5.pt --agent_counts 5 5 5 5 5 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5mediumagents_seed1.pt run_log_5mediumagents_seed2.pt run_log_5mediumagents_seed3.pt run_log_5mediumagents_seed4.p run_log_5mediumagents_seed5.p  --agent_counts 10 10 10 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5mediumagents_seed1.pt run_log_5mediumagents_seed2.pt run_log_5mediumagents_seed3.pt run_log_5mediumagents_seed4.p run_log_5mediumagents_seed5.p  --agent_counts 5 5 5 5 5 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_5mediumagents_seed1.pt run_log_5mediumagents_seed2.pt run_log_5mediumagents_seed3.pt run_log_5mediumagents_seed4.pt run_log_5mediumagents_seed5.pt  --agent_counts 5 5 5 5 5 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_10agents_seed1.pt run_log_10agents_seed2.pt run_log_10agents_seed3.pt  --agent_counts 10 10 10 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_10agents_Atnseed1.pt --agent_counts 10 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_Atnseed1.pt --agent_counts 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_10agents_Atnseed1.pt --agent_counts 10 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_Atnseed1.pt --agent_counts 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1.pt run_log_20mediumagents_seed2.pt --agent_counts 20 20  --smooth 100
-tmux
-conda activate thesis
-tmux
-conda activate thesis
-python3 visualize_training.py --compare-scaling --log_files run_log_20hardagents_seed2.pt run_log_20hardagents_seed1.pt --agent_counts 20 20 --smooth 100
-pip install visdom
-pip install -e ./ic3net_envs
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 8 --num_epochs 2000 --epoch_size 10 --batch_size 500 --hid_size 256 --comm_passes 3 --entr 0.001 --detach_gap 10 --lrate 0.0005 --dim 20 --max_steps 1000 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_20mediumagents_seed${s}.pt --log_path run_log_20mediumagents_seed${s}.pt; done
-for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 8 --num_epochs 2000 --epoch_size 10 --batch_size 500 --hid_size 256 --comm_passes 3 --entr 0.001 --detach_gap 10 --lrate 0.0005 --dim 20 --max_steps 1000 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_20mediumagents_seed${s}.pt --log_path run_log_20mediumagents_seed${s}.pt; done
-python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1.pt --agent_counts 20 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1.pt --agent_counts 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1.pt --agent_counts 20
-python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1-sporo.pt --agent_counts 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1.pt --agent_counts 20
-python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1-sporo.pt --agent_counts 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1.pt --agent_counts 20
-python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1.pt --agent_counts 20
-python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1.pt --agent_counts 20
-conda activate my_env
-conda activate thesis
-python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1.pt --agent_counts 20
-python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed3.pt --agent_counts 20 
-git add .
-git add .
-git rm -r --cached miniconda3
-git rm -r --cached conda
-git rm -r --cached anaconda
-git add .
-git rm -r --cached anaconda
-git rm -r --cached .anaconda
-git rm -r --cached .conda
-git status
-git add .
-git commit -m "added files when attention is used"
-git add
-git push
-git rm --cached Miniconda3-latest-Linux-x86_64.sh
-git commit --amend --no-edit
-git push origin master --force
-python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed3.pt --agent_counts 20 
-python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed3.pt --agent_counts 20 --smooth 100
-python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1'sporo.pt --agent_counts 20
-q
-python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1-sporo.pt --agent_counts 20
-q
-python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed3.pt --agent_counts 20 --smooth 100
 python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1-sporo.pt --agent_counts 20
 python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1-sporo.pt --agent_counts 20 --smooth 100
 python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed3.pt --agent_counts 20 --smooth 100
@@ -498,3 +155,346 @@ tmux
 conda activate thesis 
 pip install mamba-ssm -q
 tmux
+conda activate thesis
+tmux
+conda activate thesis
+tmux
+conda activate thesis
+tmux
+conda activate thesis
+tmux
+git add .
+git commit -m "changed mamba implementation and added trained files"
+git push
+git pull
+git branch
+git pull --rebase origin master
+git add .
+ git rebase --continue
+git push origin master
+conda activate thesis
+tmux
+conda activate thesis
+tmux
+for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 3000 --epoch_size 20 --batch_size 500 --hid_size 128 --detach_gap 10 --lrate 0.0005 --dim 20 --max_steps 300 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_20mediumagents_seed${s}.pt --log_path run_log_20mediumagents_seed${s}.pt; done
+for s in 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 5 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 1000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 10 --max_steps 300 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --use_agent_attn --attn_heads 4 --save model_5mediumagents_Atnseed${s}.pt --log_path run_log_5mediumagents_Atnseed${s}.pt; done
+tmuxq
+q
+for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 10 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 2000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 14 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --use_agent_attn --attn_heads 4 --save model_10agents_Atnseed${s}.pt --log_path run_log_10agents_Atnseed${s}.pt; done
+for s in 4 5; do python3 main.py --env_name traffic_junction --nagents 10 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --num_epochs 2000 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 14 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --seed $s --save model_10agents_seed${s}.pt --log_path run_log_10agents_seed${s}.pt; done
+bash train_20agents_two_stage.sh
+bash train_20agents_two_stage.sh
+for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 20 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --num_epochs 3000 --entr 0.00005 --seed $s --flash --attn_heads 4 --save model_20agents_Flash_s${s}.pt --log_path run_log_20agents_Flash_s${s}.pt; done
+for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 30 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 24 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --num_epochs 3000 --entr 0.00005 --seed $s --flash --attn_heads 4 --save model_30agents_Flash_s${s}.pt --log_path run_log_30agents_Flash_s${s}.pt; done
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Base_s1_final.pt run_log_20agents_Flash_s1.pt run_log_20agents_Mamba_s1.pt --agent_counts 20 20 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Base_s1_final.pt --agent_counts 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Flash_s1.pt --agent_counts 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Mamba_s1.pt --agent_counts 20 --smooth 100
+tmux
+tmux ls
+tmux attach -t 8
+tmux attach -t 8
+tmux kill-session -t 8
+tmux ls
+tmux kill-session -t 3
+tmux kill-session -t 4
+tmux ls
+tmux kill-session -t 2
+tmux kill-session -t 12
+tmux kill-session -t 13
+tmux kill-session -t 14
+tmux ls
+tmux attach -t 17
+tmux attach -t 19
+tmux kill-session -t 19
+tmux attach -t 20
+tmux kill-session -t 20
+tmux
+conda activate thesis
+tmux
+ python3 visualize_training.py --compare-scaling --log_files run_log_25agents_Base_s1.pt --agent_counts 25 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_30agents_Base_s1.pt --agent_counts 30 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Base_s1.pt --agent_counts 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Base_s1_final.pt --agent_counts 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Base_s1_stage1.pt --agent_counts 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Base_s1_stage1.pt run_log_20agents_Base_s2_stage1.pt run_log_20agents_Base_s3_stage1.pt --agent_counts 20 20 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Base_s1_final.pt --agent_counts 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Base_s1_final.pt --agent_counts 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Flash_s1_final.pt --agent_counts 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Flash_s1.pt --agent_counts 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Mamba_s1.pt --agent_counts 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Flash_s1.pt --agent_counts 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Mamba_s1.pt --agent_counts 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_25agents_Base_s1.pt --agent_counts 25 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Base_s1_stage1.pt run_log_20agents_Base_s2_stage1.pt run_log_20agents_Base_s3_stage1.pt --agent_counts 20 20 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Flash_s1.pt --agent_counts 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Mamba_s1.pt --agent_counts 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_25agents_Base_s1.pt --agent_counts 25 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_30agents_Base_s1.pt --agent_counts 30 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_30agents_Base_s1.pt --agent_counts 30 
+for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 24 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --num_epochs 3000 --entr 0.00005 --seed $s --flash --attn_heads 4 --save model_30agents_Flash_s${s}.pt --log_path run_log_30agents_Flash_s${s}.pt; done
+for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 24 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --num_epochs 3000 --entr 0.00005 --seed $s --flash --attn_heads 4 --save model_30agents_Flash_s${s}.pt --log_path run_log_30agents_Flash_s${s}.pt; done
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Base_s1_stage1.pt run_log_20agents_Base_s2_stage1.pt run_log_20agents_Base_s3_stage1.pt --agent_counts 20 20 20 --smooth 100
+for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 20 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --num_epochs 3000 --entr 0.00005 --seed $s -- mamba --mamba_dropout 0.1 --max_grad_norm 1.0 --save model_20agents_Mamba_s${s}.pt --log_path run_log_20agents_Mamba_s${s}.pt; done
+for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 20 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --num_epochs 3000 --entr 0.00005 --seed $s -- ma-mamba --mamba_dropout 0.1 --max_grad_norm 1.0 --save model_20agents_Mamba_s${s}.pt --log_path run_log_20agents_Mamba_s${s}.pt; done[D
+ python3 visualize_training.py --compare-scaling --log_files run_log_30agents_Base_s1.pt --agent_counts 30 
+ python3 visualize_training.py --compare-scaling --log_files run_log_25agents_Base_s1.pt --agent_counts 25 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_25agents_Base_s1.pt run_log_25agents_Base_s2.pt --agent_counts 25 25 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_30agents_Base_s1.pt run_log_30agents_Base_s1.pt --agent_counts 30 30 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_30agents_Base_s1.pt run_log_30agents_Base_s2.pt --agent_counts 30 30 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_25agents_Base_s1.pt run_log_25agents_Base_s2.pt --agent_counts 25 25 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_30agents_Flash_s1.pt run_log_30agents_Flash_s2.pt --agent_counts 30 30 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Mamba_s1.pt run_log_20agents_Mamba_s2.pt --agent_counts 20 20 --smooth 100
+tmux ls
+tmux attach -t 15
+tmux attach -t 16
+tmux attach -t 17
+tmux attach -t 18
+tmux attach -t 21
+tmux attach -t 15
+tmux attach -t 22
+tmux attach -t 23
+tmux attach -t 24
+tmux attach -t 25
+tmux kill-session -t 25
+tmux kill-session -t 24
+tmux kill-session -t 23
+tmux kill-session -t 21
+tmux kill-session -t 15
+tmux ls
+ python3 visualize_training.py --compare-scaling --log_files run_log_30agents_Flash_s2.pt --agent_counts 30 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_30agents_Flash_s1.pt --agent_counts 30 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_30agents_Base_s2.pt --agent_counts 30 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_25agents_Base_s2.pt --agent_counts 25 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Mamba_s2.pt --agent_counts 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Base_s2_final.pt --agent_counts 20 --smooth 100
+tmux
+tmux
+wc -l logs/optuna_hierlocal/trial_* | tail -1
+ps aux | grep main.py | grep optuna   
+conda activate thesis
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_HierLocal_test.pt --agent_counts 20 --smooth 100
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_HierLocal_test.pt --agent_counts 20 --smooth 1000
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_HierLocal_test.pt --agent_counts 20 
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_HierLocal_test_s1.pt --agent_counts 20 
+conda activate thesis
+tmux
+tmux
+tmux
+pip install -r requirements.txt
+conda activate thesis
+pip install -r requirements.txt
+tmux
+conda activate thesis
+python3 scripts/sweep_team_size.py --dry-run
+python3 scripts/sweep_team_size.py --team-sizes 5 --seeds 1 --dry-run
+python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 20 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --num_epochs 100 --entr 0.00005 --seed 1 --hier_local_attn --team_size 5 --save model_20agents_HierLocal_test.pt --log_path run_log_20agents_HierLocal_test.pt
+python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 20 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --num_epochs 100 --entr 0.00005 --seed 1 --hier_local_attn --team_size 5 --save model_20agents_HierLocal_test.pt --log_path run_log_20agents_HierLocal_test.pt
+tmux
+for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --epoch_size 20 --batch_size 150 --hid_size 256 --detach_gap 10 --lrate 0.0001 --dim 20 --max_steps 500 --ic3net --vision 2 --comm_passes 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --num_epochs 3000 --entr 0.00005 --seed $s --hier_local_attn --team_size 5 --save model_20agents_HierLocal_test_s${s}.pt --log_path run_log_20agents_HierLocal_test_s${s}.pt
+for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --epoch_size 20 --batch_size 150 --hid_size 256 --detach_gap 10 --lrate 0.0001 --dim 20 --max_steps 500 --ic3net --vision 2 --comm_passes 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --num_epochs 3000 --entr 0.00005 --seed $s --hier_local_attn --team_size 5 --save model_20agents_HierLocal_test_s${s}.pt --log_path run_log_20agents_HierLocal_test_s${s}.pt; done
+for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --epoch_size 20 --batch_size 150 --hid_size 256 --detach_gap 10 --lrate 0.0001 --dim 20 --max_steps 500 --ic3net --vision 2 --comm_passes 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --num_epochs 3000 --entr 0.00005 --seed $s --hier_local_attn --team_size 5 --save model_20agents_HierLocal_test_s${s}.pt --log_path run_log_20agents_HierLocal_test_s${s}.pt;  for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --epoch_size 20 --batch_size 150 --hid_size 256 --detach_gap 10 --lrate 0.0001 --dim 20 --max_steps 500 --ic3net --vision 2 --comm_passes 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --num_epochs 3000 --entr 0.00005 --seed $s --hier_local_attn --team_size 5 --save model_20agents_HierLocal_test_s${s}.pt --log_path run_log_20agents_HierLocal_test_s${s}.pt; 
+bash /home/dragojla/scripts/fine_tune_20agents_hierlocal.sh
+python3 scripts/sweep_team_size.py --team-sizes 4 6 8 10 --seeds 1 2 3
+python3 scripts/sweep_team_size.py --team-sizes 4 6 8 10 --seeds 1 2 3
+python3 scripts/sweep_team_size.py --team-sizes 4 6 8 10 --seeds 1 2 3
+File "/home/dragojla/main.py", line 875, in <module>
+    main()   File "/home/dragojla/main.py", line 861, in main
+    run(args.num_epochs)
+  File "/home/dragojla/main.py", line 667, in run
+    s = trainer.train_batch(ep)
+        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dragojla/trainer.py", line 275, in train_batch
+    batch, stat = self.run_batch(epoch)
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dragojla/trainer.py", line 263, in run_batch
+    episode, episode_stat = self.get_episode(epoch)
+                            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dragojla/trainer.py", line 65, in get_episode
+    action_out, value = self.policy_net(x, info)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dragojla/miniconda3/envs/thesis/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1532, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dragojla/miniconda3/envs/thesis/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dragojla/comm_attention.py", line 265, in forward
+    global_comm, _ = self.global_attention(
+                     ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dragojla/miniconda3/envs/thesis/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1532, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dragojla/miniconda3/envs/thesis/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dragojla/miniconda3/envs/thesis/lib/python3.12/site-packages/torch/nn/modules/activation.py", line 1266, in forward
+    attn_output, attn_output_weights = F.multi_head_attention_forward(
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dragojla/miniconda3/envs/thesis/lib/python3.12/site-packages/torch/nn/functional.py", line 5291, in multi_head_attention_forward
+    is_batched = _mha_shape_check(query, key, value, key_padding_mask, attn_mask, num_heads)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dragojla/miniconda3/envs/thesis/lib/python3.12/site-packages/torch/nn/functional.py", line 5115, in _mha_shape_check
+    raise AssertionError(
+AssertionError: query should be unbatched 2D or batched 3D tensor but received 4-D query tensor
+python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 20 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --num_epochs 100 --entr 0.00005 --seed 1 --hier_local_attn --team_size 5 --save model_20agents_HierLocal_test.pt --log_path run_log_20agents_HierLocal_test.pt
+python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --epoch_size 20 --batch_size 150 --hid_size 256 --detach_gap 10 --lrate 0.0001 --dim 20 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --num_epochs 100 --entr 0.00005 --seed 1 --hier_local_attn --team_size 5 --comm_passes 2 --save model_20agents_HierLocal_test.pt --log_path run_log_20agents_HierLocal_test.pt
+conda activate thesis
+tmux
+python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 20 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --num_epochs 100 --entr 0.00005 --seed 1 --hier_local_attn --team_size 5 --save model_20agents_HierLocal_test_s1.pt --log_path run_log_20agents_HierLocal_test_s1.pt
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_HierLocal_test_s1.pt --agent_counts 20 
+tmux ls
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_HierLocal_test_s1.pt --agent_counts 20 
+tmux ls
+tmux attach -t 32
+tmux attach -t 31
+tmux attach -t 30
+tmux attach -t 29
+tmux attach -t 28
+tmux attach -t 27
+tmux attach -t 26
+tmux kill-session -t 32
+tmux kill-session -t 31
+tmux kill-session -t 29
+tmux kill-session -t 28
+tmux kill-session -t 27
+tmux kill-session -t 26
+tmux ls
+tmux attach -t 30
+conda activate thesis
+tmux
+for s in 1 2 3; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 4 --epoch_size 20 --batch_size 150 --hid_size 256 --comm_passes 2 --lrate 0.0001 --dim 20 --entr 0.00005 --max_steps 500 --ic3net --hard_attn --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --num_epochs 3000 --seed $s --flash --save model_20agents_Flash_s${s}.pt --log_path run_log_20agents_Flash_s${s}.pt; done
+for s in 1 2 3; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 8 --epoch_size 20 --batch_size 150 --hid_size 256 --comm_passes 2 --lrate 0.0001 --dim 20 --entr 0.00005 --max_steps 500 --ic3net --hard_attn --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --num_epochs 3000 --seed $s --flash --save model_20agents_Flash_s${s}.pt --log_path run_log_20agents_Flash_s${s}.pt; done
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_HierLocal_s1.pt --agent_counts 20 
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Flash_s1.pt --agent_counts 20 
+conda activate thesis
+tmux
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_HierLocal_s1.pt --agent_counts 20 
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Flash_s1.pt --agent_counts 20 
+tmux ls
+tmux attach -t 34
+tmux attach -t 33
+tmux kill-session -t 34
+tmux
+conda activate thesis
+for s in 1 2 3; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 8 --epoch_size 20 --batch_size 150 --hid_size 256 --comm_passes 2 --lrate 0.0001 --dim 20 --entr 0.00005 --max_steps 500 --ic3net --hard_attn --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --num_epochs 3000 --seed $s --flash --save model_20agents_Flash_s${s}.pt --log_path run_log_20agents_Flash_s${s}.pt; done
+tmux
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_HierLocal_s1.pt --agent_counts 20 
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_HierLocal_2stage_s1_stage1.pt --agent_counts 20 
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Flash_s1.pt --agent_counts 20 
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_HierLocal_test.pt --agent_counts 20 
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_HierLocal_s1.pt --agent_counts 20 
+for s in 1 2 3; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 8 --epoch_size 20 --batch_size 150 --hid_size 256 --comm_passes 2 --lrate 0.0001 --dim 20 --entr 0.00005 --max_steps 500 --ic3net --hard_attn --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --num_epochs 3000 --seed $s --flash --save model_20agents_Flash_s${s}.pt --log_path run_log_20agents_Flash_s${s}.pt; done
+for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 20 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --num_epochs 3000 --entr 0.00005 --seed $s --mamba --mamba_dropout 0.1 --max_grad_norm 1.0 --save model_20agents_Mamba_s${s}.pt --log_path run_log_20agents_Mamba_s${s}.pt; done
+for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 20 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --num_epochs ${STAGE1_EPOCHS} --entr 0.00005 --seed $s --save model_20agents_Base_s${s}_final.pt --log_path run_log_20agents_Base_s${s}_final.pt; done
+for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 20 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 20 --max_steps 500 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --num_epochs 3000 --entr 0.00005 --seed $s --save model_20agents_Base_s${s}_final.pt --log_path run_log_20agents_Base_s${s}_final.pt; done
+for s in 1 2 3 4 5; do python3 main.py --env_name traffic_junction --nagents 30 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 1 --epoch_size 20 --batch_size 150 --hid_size 128 --detach_gap 10 --lrate 0.00005 --dim 24 --max_steps 700 --ic3net --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --num_epochs 3000 --entr 0.00005 --seed $s --save model_30agents_Base_s${s}.pt --log_path run_log_30agents_Base_s${s}.pt; done
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_HierLocal_s1.pt --agent_counts 20 
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Flash_s1.pt --agent_counts 20 
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_HierLocal_2stage_s1_stage1.pt --agent_counts 20 
+tmux ls
+tmux attach -t 16
+tmux attach -t 17
+tmux attach -t 16
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Base_s1_final.pt --agent_counts 20 
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Base_s1_final.pt run_log_20agents_Base_s2_final.pt --agent_counts 20 20
+ python3 visualize_training.py --compare-scaling --log_files run_log_25agents_Base_s2.pt run_log_25agents_Base_s1.pt --agent_counts 25 25
+ python3 visualize_training.py --compare-scaling --log_files run_log_25agents_Base_s2.pt run_log_25agents_Base_s1.pt run_log_25agents_Base_s3.pt --agent_counts 25 25 25
+ python3 visualize_training.py --compare-scaling --log_files run_log_25agents_Base_s2.pt run_log_30agents_Base_s1.pt run_log_30agents_Base_s2.pt --agent_counts 30 30 
+ python3 visualize_training.py --compare-scaling --log_files run_log_30agents_Base_s1.pt run_log_30agents_Base_s2.pt --agent_counts 30 30
+tmux ls
+tmux attach -t 22
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Mamba_s1.pt --agent_counts 20
+tmux ls
+tmux attach -t 30
+tmux attach -t 30
+tmux attach -t 33
+tmux attach -t 35
+tmux attach -t 36
+tmux attach -t 37
+tmux attach -t 36
+tmux attach -t 35
+tmux kill-session -t 35
+tmux ls
+tmux ls
+tmux attach -t 37
+tmux attach -t 36
+tmux attach -t 33
+tmux attach -t 30
+tmux attach -t 22
+tmux kill-session -t 22
+tmux attach -t 16
+tmux attach -t 17
+tmux attach -t 18
+tmux kill-session -t 16
+ python3 visualize_training.py --compare-scaling --log_files run_log_30agents_Base_s1.pt run_log_30agents_Base_s2.pt --agent_counts 30 30
+tmux attach -t 18
+tmux kill-session -t 18
+ python3 visualize_training.py --compare-scaling --log_files run_log_25agents_Base_s1.pt --agent_counts 25
+ python3 visualize_training.py --compare-scaling --log_files run_log_25agents_Base_s3.pt --agent_counts 25
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_HierLocal_2stage_s1_stage1.pt --agent_counts 20 
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_HierLocal_s1.pt --agent_counts 20 
+tmux ls
+tmux attach -t 17
+tmux attach -t 30
+tmux attach -t 33
+tmux attach -t 36
+tmux attach -t 37
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Mamba_s1.pt --agent_counts 20 
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Mamba_s2.pt --agent_counts 20 
+print('-' * 50)
+for n in [10, 25, 50, 100, 200, 500]:;     n2, flash, red = memory_comparison(n)
+print() print('Key Benefits of Flash Attention:')
+print('• O(n) memory complexity vs O(n²)')
+print('• Scales to 1000+ agents efficiently') 
+print('• Faster training and inference')
+print('• Exact attention (not approximated)')
+"
+tmux ls
+tmux attach -t 17
+ python3 visualize_training.py --compare-scaling --log_files run_log_25agents_Base_s1.pt --agent_counts 25 
+ python3 visualize_training.py --compare-scaling --log_files run_log_25agents_Base_s1.pt  run_log_25agents_Base_s2.pt --agent_counts 25 25
+ python3 visualize_training.py --compare-scaling --log_files run_log_25agents_Base_s1.pt  run_log_25agents_Base_s3.pt --agent_counts 25 25
+ python3 visualize_training.py --compare-scaling --log_files model_1.pt --agent_counts 2
+ python3 visualize_training.py --compare-scaling --log_files model_2agents-deletecrashedcars3.pt --agent_counts 2
+ python3 visualize_training.py --compare-scaling --log_files model_2agents-es.pt --agent_counts 2
+ python3 visualize_training.py --compare-scaling --log_files model_5agents-NoAtn3easy2.pt --agent_counts 5
+ python3 visualize_training.py --compare-scaling --log_files model_5agents-NoAtn3medium2.pt --agent_counts 5
+ python3 visualize_training.py --compare-scaling --log_files model_5agents.pt --agent_counts 5
+ python3 visualize_training.py --compare-scaling --log_files model_5easyagents_seed1.pt --agent_counts 5
+ python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt --agent_counts 2
+ python3 visualize_training.py --compare-scaling --log_files run_log_2agents-es.pt --agent_counts 2
+ python3 visualize_training.py --compare-scaling --log_files run_log_2agents-deletecrashedcars3.pt --agent_counts 2
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Mamba_s2.pt --agent_counts 20 
+ python3 visualize_training.py --compare-scaling --log_files run_log_25agents_Base_s1.pt --agent_counts 25
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Flash_s1.pt --agent_counts 20
+ python3 visualize_training.py --compare-scaling --log_files run_log_20mediumagents_seed1.pt run_log_20mediumagents_seed2.pt run_log_20mediumagents_seed3.pt run_log_20mediumagents_seed4.pt run_log_20mediumagents_seed5.pt --agent_counts 20 20 20 20 20
+ python3 visualize_training.py --compare-scaling --log_files  run_log_25agents_Base_s3.pt run_log_25agents_Base_s3.pt run_log_25agents_Base_s3.pt --agent_counts 25 25 25
+ python3 visualize_training.py --compare-scaling --log_files  run_log_25agents_Base_s3.pt run_log_25agents_Base_s3.pt --agent_counts 25 25 25
+ python3 visualize_training.py --compare-scaling --log_files  run_log_25agents_Base_s3.pt run_log_25agents_Base_s3.pt --agent_counts 25 25 
+conda activate thesis
+tmux
+tmux ls
+tmux attach -t 39
+tmux attach -t 38
+tmux attach -t 39
+tmux kill-session -t 39
+for s in 1 2 3; do python3 main.py --env_name traffic_junction --nagents 50 --add_rate_min 1.0 --add_rate_max 1.0 --nprocesses 4 --epoch_size 20 --batch_size 150 --hid_size 256 --comm_passes 2 --lrate 0.0001 --dim 40 --entr 0.001 --max_steps 100 --ic3net --hard_attn --vision 2 --difficulty medium --crash_penalty -15 --terminal_reward 15 --num_epochs 3000 --seed $s --flash --save model_50agents_FlashNew_s${s}.pt --log_path run_log_50agents_FlashNew_s${s}.pt; done
+conda activate thesis
+tmux
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_FlashNew_s1.pt --agent_counts 20
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_Base_s3.pt --agent_counts 25
+ python3 visualize_training.py --compare-scaling --log_files run_log_25agents_Base_s3.pt --agent_counts 25
+conda activate thesis
+tmux
+tmux ls
+tmux attach -t 38
+tmux attach -t 37
+tmux attach -t 36
+tmux attach -t 33
+tmux attach -t 30
+tmux attach -t 17
+tmux
+ python3 visualize_training.py --compare-scaling --log_files run_log_50agents_FlashNew_s1.pt --agent_counts 50
+ python3 visualize_training.py --compare-scaling --log_files run_log_25agents_FlashNew_s1.pt --agent_counts 25
+ python3 visualize_training.py --compare-scaling --log_files run_log_20agents_FlashNew_s1.pt --agent_counts 20

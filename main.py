@@ -25,8 +25,12 @@ matplotlib.use('Agg') # Fallback to non-interactive
 import matplotlib.pyplot as plt
 import data
 from models import *
-from comm import CommNetMLP
-#from comm_attention import AttentionCommNetMLP as CommNetMLP
+from comm_attention import AttentionCommNetMLP, HierarchicalAttentionCommNet
+try:
+    from comm import CommNetMLP
+except ImportError:
+    # Fallback keeps training runnable even if comm.py is absent in this workspace.
+    CommNetMLP = AttentionCommNetMLP
 from utils import *
 from action_utils import parse_action_args, select_action, translate_action
 from trainer import Trainer
@@ -171,14 +175,46 @@ def main():
                         help='Number of heads for agent self-attention')
     parser.add_argument('--flash', default=False, action='store_true',
                         help='Use FlashAttention-style agent attention over hidden states')
+    parser.add_argument('--flash_attn_dropout', type=float, default=0.0,
+                        help='Dropout used inside flash attention (during training only)')
+    parser.add_argument('--flash_block_size', type=int, default=32,
+                        help='Block size for Flash Attention tiling (smaller = less memory, larger = faster)')
+    parser.add_argument('--flash_gate_init', type=float, default=0.1,
+                        help='Initial residual gate value for flash attention (before sigmoid)')
     parser.add_argument('--mamba', default=False, action='store_true',
                         help='Use a Mamba-style recurrent block for temporal memory')
     parser.add_argument('--mamba_dropout', type=float, default=0.1,
                         help='Dropout rate for Mamba block')
+    parser.add_argument('--hier_local_attn', default=False, action='store_true',
+                        help='Use hierarchical local attention communication model')
+    parser.add_argument('--team_size', type=int, default=5,
+                        help='Team size for hierarchical local attention')
     parser.add_argument('--max_grad_norm', type=float, default=1.0,
                         help='Maximum gradient norm for clipping (0 to disable)', required=False)
 
-    init_args_for_env(parser)
+    # Traffic Junction environment arguments
+    env_group = parser.add_argument_group('Traffic Junction task')
+    env_group.add_argument('--dim', type=int, default=6,
+                          help="Dimension of box (i.e length of road)")
+    env_group.add_argument('--vision', type=int, default=1,
+                          help="Vision of car")
+    env_group.add_argument('--add_rate_min', type=float, default=0.05,
+                          help="rate at which to add car (till curr. start)")
+    env_group.add_argument('--add_rate_max', type=float, default=0.2,
+                          help=" max rate at which to add car")
+    env_group.add_argument('--curr_start', type=float, default=0,
+                          help="start making harder after this many epochs [0]")
+    env_group.add_argument('--curr_end', type=float, default=0,
+                          help="when to make the game hardest [0]")
+    env_group.add_argument('--crash_penalty', type=float, default=-2.0,
+                          help="penalty applied to each agent on collision")
+    env_group.add_argument('--terminal_reward', type=float, default=15.0,
+                          help="reward applied when an agent reaches destination")
+    env_group.add_argument('--difficulty', type=str, default='easy',
+                          help="Difficulty level, easy|medium|hard")
+    env_group.add_argument('--vocab_type', type=str, default='bool',
+                          help="Type of location vector to use, bool|scalar")
+
     args = parser.parse_args()
 
     if args.ic3net:
@@ -187,8 +223,9 @@ def main():
         args.mean_ratio = 1 # fully cooperative
         args.comm_action_one = False # not always communicate
 
-    if args.flash and args.mamba:
-        raise ValueError('Choose only one of --flash or --mamba')
+    enabled_alt_models = int(args.flash) + int(args.mamba) + int(args.hier_local_attn)
+    if enabled_alt_models > 1:
+        raise ValueError('Choose only one of --flash, --mamba, or --hier_local_attn')
 
     if args.flash:
         args.commnet = 1
@@ -198,6 +235,10 @@ def main():
         args.commnet = 1
         args.recurrent = True
         args.rnn_type = 'MAMBA'
+
+    if args.hier_local_attn:
+        args.commnet = 1
+        args.recurrent = False
 
     # Set friendly agents count (traffic junction only has friendly cars)
     args.nfriendly = args.nagents
@@ -246,7 +287,12 @@ def main():
 
 
     if args.commnet:
-        policy_net = CommNetMLP(args, num_inputs)
+        if args.hier_local_attn:
+            policy_net = HierarchicalAttentionCommNet(args, num_inputs, team_size=args.team_size)
+        elif args.flash:
+            policy_net = AttentionCommNetMLP(args, num_inputs)
+        else:
+            policy_net = CommNetMLP(args, num_inputs)
     elif args.random:
         policy_net = Random(args, num_inputs)
     elif args.recurrent:
